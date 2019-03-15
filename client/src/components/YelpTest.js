@@ -3,15 +3,17 @@ import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 
 export const TEST_YELP = gql`
-{
-  search(term: "burrito",
-          location: "san francisco",
-          limit: 5) {
-      total
-      business {
-          name
-          url
+query searchBusiness {
+  searchBusinessTerm(latitude: 41.895546, longitude: -87.638756, term: "coffee") {
+    businesses {
+      price
+      name
+      rating
+      coordinates {
+        latitude
+        longitude
       }
+    }
   }
 }`
 

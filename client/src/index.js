@@ -8,7 +8,7 @@ import Test from './components/YelpTest'
 // import {resolvers, typeDefs} from './resolvers'
 
 const httpLink = new HttpLink({
-  uri: 'https://api.yelp.com/v3/graphql',
+  uri: 'http://localhost:4000/graphql',
   credentials: "include",
   headers: {
     authorization: process.env.YELP_API_KEY ? `Bearer ${process.env.YELP_API_KEY}` : "",
