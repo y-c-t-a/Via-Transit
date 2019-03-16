@@ -2,21 +2,21 @@ module.exports = {
   Query: {
     searchBusinessTerm: (_, { latitude, longitude, term }, { dataSources }) =>
       dataSources.YelpAPI.getBusinesses(latitude, longitude, term),
-    getDirections: async (
+    getDirections: (
       _,
       {
         originLatitude,
         originLongitude,
         destinationLatitude,
-        destinationLongitude
+        destinationLongitude,
       },
       { dataSources }
     ) =>
-      await dataSources.GoogleAPI.createDirections(
+      dataSources.GoogleAPI.createDirections(
         originLatitude,
         originLongitude,
         destinationLatitude,
         destinationLongitude
-      )
-  }
+      ),
+  },
 }

@@ -31,6 +31,11 @@ const typeDefs = gql`
     longitude: Float
   }
 
+  type GoogleCoordinates {
+    lat: Float
+    lng: Float
+  }
+
   type Routes {
     routes: [RouteData]
   }
@@ -44,8 +49,8 @@ const typeDefs = gql`
   }
 
   type Directions {
-    southwest: Coordinates
-    northeast: Coordinates
+    southwest: GoogleCoordinates
+    northeast: GoogleCoordinates
   }
 
   type Fare {
@@ -62,8 +67,8 @@ const typeDefs = gql`
 
   type Step {
     travel_mode: String
-    start_location: Coordinates
-    end_location: Coordinates
+    start_location: GoogleCoordinates
+    end_location: GoogleCoordinates
     # polyline: Point
     duration: Duration
     html_instructions: String
@@ -95,7 +100,7 @@ const typeDefs = gql`
 
   type Stop {
     name: String
-    location: Coordinates
+    location: GoogleCoordinates
   }
 
   type Line {

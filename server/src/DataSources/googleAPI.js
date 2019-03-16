@@ -14,16 +14,23 @@ class GoogleAPI extends RESTDataSource {
     destinationLatitude,
     destinationLongitude
   ) {
-    const response = await axios({
-      method: 'get',
-      url: `${
+    // const response = await axios({
+    //   method: 'get',
+    //   url: `${
+    //     this.directionsBaseURL
+    //   }origin=${originLatitude},${originLongitude}&destination=${destinationLatitude},${destinationLongitude}&mode=transit&key=${
+    //     process.env.GOOGLE_API_KEY
+    //   }`,
+    // })
+    const response = await this.get(
+      `${
         this.directionsBaseURL
       }origin=${originLatitude},${originLongitude}&destination=${destinationLatitude},${destinationLongitude}&mode=transit&key=${
         process.env.GOOGLE_API_KEY
       }`
-    })
-    console.log('DADA', response.data.routes)
-    return response.data
+    )
+    console.log(response)
+    return response
   }
 }
 
