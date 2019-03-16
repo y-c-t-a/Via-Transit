@@ -5,7 +5,10 @@ import { HttpLink } from 'apollo-link-http'
 import { ApolloProvider } from 'react-apollo'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import TestGoogle from './components/GoogleTest'
+import TestYelp from './components/YelpTest'
 import dotenv from 'dotenv'
+import GoogleTest from './components/GoogleTest'
+import TestGoogleQuery from './components/TestGoogleQuery'
 // import {resolvers, typeDefs} from './resolvers'
 dotenv.config()
 const client = new ApolloClient({
@@ -18,6 +21,8 @@ const client = new ApolloClient({
 
 ReactDOM.render(
   <ApolloProvider client={client}>
+    {/* <TestGoogleQuery /> */}
+    {/* <TestYelp /> */}
     <TestGoogle />
   </ApolloProvider>,
   document.getElementById('root')
