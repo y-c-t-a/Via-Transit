@@ -1,117 +1,90 @@
-import React, { Component } from 'react'
-import { Query } from 'react-apollo'
-import gql from 'graphql-tag'
-import { Map, GoogleApiWrapper } from 'google-maps-react'
-import dotenv from 'dotenv'
-import { GOOGLE_API_KEY } from '../secrets'
+import React, { Component } from 'react';
+import { GOOGLE_API_KEY } from '../secrets';
 
-export const TEST_GOOGLE = gql`
-  query {
-    getDirections(
-      originLatitude: 41.895541
-      originLongitude: -87.639220
-      destinationLatitude: 41.8902842
-      destinationLongitude: -87.6440364
+export default class TestGoogleQuery extends Component {
+  onScriptLoad = () => {
+    var markerArray = [];
+
+    var directionsService = new window.google.maps.DirectionsService();
+
+    var map = new window.google.maps.Map(document.getElementById('map'), {
+      zoom: 13,
+      center: { lat: 41.8955, lng: -87.6392 },
+    });
+
+    var directionsDisplay = new window.google.maps.DirectionsRenderer({ map: map });
+
+    var stepDisplay = new window.google.maps.InfoWindow();
+
+    calculateAndDisplayRoute(
+      directionsDisplay,
+      directionsService,
+      markerArray,
+      stepDisplay,
+      map
+    );
+
+    function calculateAndDisplayRoute(
+      directionsDisplay,
+      directionsService,
+      markerArray,
+      stepDisplay,
+      map
     ) {
-      routes {
-        summary
-        legs {
-          steps {
-            travel_mode
-            start_location {
-              lat
-              lng
-            }
-            end_location {
-              lat
-              lng
-            }
-            # polyline {points}
-            duration {
-              value
-              text
-            }
-            html_instructions
-            distance {
-              value
-              text
-            }
-            transit_details {
-              arrival_stop {
-                name
-                location {
-                  lat
-                  lng
-                }
-              }
-              departure_stop {
-                name
-                location {
-                  lat
-                  lng
-                }
-              }
-              headway
-              num_stops
-              line {
-                name
-                short_name
-                color
-                icon
-                vehicle {
-                  name
-                  type
-                  icon
-                  local_icon
-                }
-              }
-            }
-          }
-          duration {
-            value
-            text
-          }
-          distance {
-            value
-            text
+      // First, remove any existing markers from the map.
+      for (var i = 0; i < markerArray.length; i++) {
+        markerArray[i].setMap(null);
+      }
+
+      // Retrieve the start and end locations and create a DirectionsRequest using
+      directionsService.route(
+        {
+          origin: {lat:41.895541, lng: -87.639220},
+          destination: {lat:41.8902842, lng: -87.6440364},
+          travelMode: 'WALKING',
+        },
+        function(response, status) {
+          if (status === 'OK') {
+            directionsDisplay.setDirections(response);
+            showSteps(response, markerArray, stepDisplay, map);
+          } else {
+            window.alert('Directions request failed due to ' + status);
           }
         }
-        # overview_polyline
-        fare {
-          currency
-          value
-          text
-        }
-        bounds {
-          southwest {
-            lng
-            lat
-          }
-          northeast {
-            lng
-            lat
-          }
-        }
+      );
+    }
+    function showSteps(directionResult, markerArray, stepDisplay, map) {
+      // For each step, place a marker, and add the text to the marker's infowindow.
+      // Also attach the marker to an array so we can keep track of it and remove it
+      // when calculating new routes.
+      var myRoute = directionResult.routes[0].legs[0];
+      for (var i = 0; i < myRoute.steps.length; i++) {
+        var marker = (markerArray[i] =
+          markerArray[i] || new window.google.maps.Marker());
+        marker.setMap(map);
+        marker.setPosition(myRoute.steps[i].start_location);
       }
     }
-  }
-`
+  };
 
-export default function TestGoogleQuery() {
-  return (
-    <div>
-      <Query query={TEST_GOOGLE}>
-        {({ data, loading, error }) => {
-          console.log(data)
-          if (loading) return <p>Loading...</p>
-          if (error) return <p>oh noes</p>
-          return (
-            <div>
-              <p>{data.getDirections.routes[0].summary}</p>
-            </div>
-          )
-        }}
-      </Query>
-    </div>
-  )
+  componentDidMount() {
+    if (!window.google) {
+      var s = document.createElement('script');
+      s.type = 'text/javascript';
+      s.src = `https://maps.google.com/maps/api/js?key=${GOOGLE_API_KEY}`;
+      var x = document.getElementsByTagName('script')[0];
+      x.parentNode.insertBefore(s, x);
+      // Below is important.
+      //We cannot access google.maps until it's finished loading
+      s.addEventListener('load', e => {
+        this.onScriptLoad();
+      });
+    } else {
+      this.onScriptLoad();
+    }
+  }
+
+  render() {
+    return <div style={{ width: 500, height: 500 }} id={this.props.id} />;
+  }
 }
