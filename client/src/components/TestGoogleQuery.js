@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
-import { Map, GoogleApiWrapper, Marker } from 'google-maps-react'
+import { Map, GoogleApiWrapper } from 'google-maps-react'
 import dotenv from 'dotenv'
 import { GOOGLE_API_KEY } from '../secrets'
 
@@ -97,53 +97,21 @@ export const TEST_GOOGLE = gql`
   }
 `
 
-const mapStyles = {
-  width: '100%',
-  height: '100%',
+export default function TestGoogleQuery() {
+  return (
+    <div>
+      <Query query={TEST_GOOGLE}>
+        {({ data, loading, error }) => {
+          console.log(data)
+          if (loading) return <p>Loading...</p>
+          if (error) return <p>oh noes</p>
+          return (
+            <div>
+              <p>{data.getDirections.routes[0].summary}</p>
+            </div>
+          )
+        }}
+      </Query>
+    </div>
+  )
 }
-
-class TestGoogle extends Component {
-  render() {
-    return (
-      <div id="map">
-        <Map
-          google={this.props.google}
-          zoom={11}
-          style={mapStyles}
-          initialCenter={{
-            lat: 41.8781,
-            lng: -87.6298,
-          }}
-        >
-          <Marker
-            title={'this is a test'}
-            name={'heres a name'}
-            position={{ lat: 41.8781, lng: -87.6298 }}
-          />
-        </Map>
-      </div>
-    )
-  }
-}
-export default GoogleApiWrapper({
-  apiKey: GOOGLE_API_KEY,
-})(TestGoogle)
-
-// export default function TestGoogle() {
-//   return (
-//     <div>
-//       <Query query={TEST_GOOGLE}>
-//         {({ data, loading, error }) => {
-//           console.log(data)
-//           if (loading) return <p>Loading...</p>
-//           if (error) return <p>oh noes</p>
-//           return (
-//             <div>
-//               <p>hey</p>
-//             </div>
-//           )
-//         }}
-//       </Query>
-//     </div>
-//   )
-// }
