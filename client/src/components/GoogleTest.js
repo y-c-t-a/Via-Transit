@@ -70,22 +70,3 @@ class TestGoogle extends Component {
 export default GoogleApiWrapper({
   apiKey: GOOGLE_API_KEY
 })(TestGoogle)
-
-// export default function TestGoogle() {
-//   return (
-//     <div>
-//       <Query query={TEST_GOOGLE}>
-//         {({ data, loading, error }) => {
-//           console.log(data)
-//           if (loading) return <p>Loading...</p>
-//           if (error) return <p>oh noes</p>
-//           return (
-//             <div>
-//               <p>hey</p>
-//             </div>
-//           )
-//         }}
-//       </Query>
-//     </div>
-//   )
-// }
