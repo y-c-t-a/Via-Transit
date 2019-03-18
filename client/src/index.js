@@ -4,25 +4,31 @@ import { ApolloClient } from 'apollo-client'
 import { HttpLink } from 'apollo-link-http'
 import { ApolloProvider } from 'react-apollo'
 import { InMemoryCache } from 'apollo-cache-inmemory'
-// import TestGoogle from './components/GoogleTest'
-// import TestYelp from './components/YelpTest'
-import TestGoogleQuery from './components/TestGoogleQuery'
+import YelpCategorySearch from './components/YelpCategorySearch'
+import Map from './components/Map'
 // import {resolvers, typeDefs} from './resolvers'
+
+const cache = new InMemoryCache()
+cache.writeData({
+  data: {
+    latitude: 41.8955,
+    longitude: -87.6392,
+    term: 'Coffee & Tea'
+  }
+})
 
 const client = new ApolloClient({
   link: new HttpLink({
     uri: 'http://localhost:4000/graphql',
-    headers: {},
+    headers: {}
   }),
-  cache: new InMemoryCache(),
+  cache
 })
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <TestGoogleQuery
-    id="map"/>
-    {/* <TestYelp /> */}
-    {/* <TestGoogle /> */}
+    <Map id="map" />
+    <YelpCategorySearch />
   </ApolloProvider>,
   document.getElementById('root')
 )
