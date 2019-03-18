@@ -2,21 +2,25 @@
 
 /*
 
-query {
-  searchBusinessTerm(latitude: 41.895546, longitude: -87.638756, term: “coffee”) {
-    businesses {
-      price
-      name
-      rating
-      coordinates {
-        latitude
-        longitude
+export const YELP_CATEGORY_SEARCH = gql`
+  query searchBusiness($latitude: Float!, $longitude: Float!, $term: String) {
+    searchBusinessTerm(
+      latitude: $latitude
+      longitude: $longitude
+      term: $term
+    ) {
+      businesses {
+        price
+        name
+        rating
+        coordinates {
+          latitude
+          longitude
+        }
       }
     }
   }
- }
-
- */
+`
 
 //Google Query:
 
