@@ -1,104 +1,39 @@
-import React from 'react'
-import { Query, ApolloConsumer } from 'react-apollo'
-import { Select } from 'semantic-ui-react'
-import gql from 'graphql-tag'
+import React from 'react';
+import { Mutation } from 'react-apollo';
+import { Select } from 'semantic-ui-react';
+import gql from 'graphql-tag';
 
-export const YELP_CATEGORY_SEARCH = gql`
-  query searchBusiness($latitude: Float!, $longitude: Float!, $term: String) {
-    searchBusinessTerm(
-      latitude: $latitude
-      longitude: $longitude
-      term: $term
-    ) {
-      businesses {
-        price
-        name
-        rating
-        coordinates {
-          latitude
-          longitude
-        }
-      }
+
+export const UPDATE_TERM = gql`
+  mutation updateTerm($term: String!) {
+    updateTerm(term: $term) @client {
+      term
     }
   }
-`
+`;
 
-const attractions = ['Restaurants', 'Breakfast & Brunch', 'Coffee & Tea']
+const attractions = ["Restaurants", "Breakfast & Brunch", "Coffee & Tea"];
 
 export default class YelpCategorySearch extends React.Component {
-  // constructor(props) {
-  //   super(props)
-
-  // const query = gql`
-  //   query getCache {
-  //     data @client {
-  //       latitude
-  //       longitude
-  //       term
-  //     }
-  //   }
-  // `
-  // const yelpInfo = this.props.client.cache.readQuery({ query })
-  // // const { latitude, longitude, term } = yelpInfo
-  // }
-
   render() {
-    // const { latitude, longitude, term } = this.yelpInfo
-    // console.log(latitude)
     return (
-      <div>
-        <ApolloConsumer>
-          {client => (
+
+        <Mutation mutation={UPDATE_TERM}>
+          {updateTerm => (
             <Select
               placeholder="Choose an attraction"
               options={attractions.map(attraction => ({
                 key: attraction,
                 text: attraction,
-                value: attraction
+                value: attraction,
               }))}
-              onChange={event => {
-                client.writeData({ data: { term: event.target.value } })
+              onChange={(event, data) => {
+                updateTerm({variables: {term: data.value}})
               }}
-            />
+            >
+            </Select>
           )}
-          {/* <Query
-            query={YELP_CATEGORY_SEARCH}
-            variables={{ latitude, longitude, term }}
-            client
-          >
-            {({ data, loading, error }) => {
-              console.log(data)
-              if (loading) return <p>Loading...</p>
-              if (error) return <p>{error}</p>
-              return (
-                <div>
-                  <h1>{data.searchBusinessTerm.businesses}</h1>
-                </div>
-              )
-            }}
-          </Query> */}
-        </ApolloConsumer>
-      </div>
-    )
+        </Mutation>
+    );
   }
 }
-
-// export default graphql(gql`
-//   query searchBusiness($latitude: Float!, $longitude: Float!, $term: String) {
-//     searchBusinessTerm(
-//       latitude: $latitude
-//       longitude: $longitude
-//       term: $term
-//     ) {
-//       businesses {
-//         price
-//         name
-//         rating
-//         coordinates {
-//           latitude
-//           longitude
-//         }
-//       }
-//     }
-//   }
-// `)(YelpCategorySearch)
