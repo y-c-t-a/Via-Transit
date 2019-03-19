@@ -20,7 +20,7 @@ export const resolvers = {
   Mutation: {
     updateTerm: (_, { term }, { cache }) => {
       const data = {
-        term: term,
+        term: term
       }
       cache.writeData({ data })
       return data.term
@@ -32,6 +32,7 @@ export const resolvers = {
       }
       console.log('this are data --->', data)
       cache.writeData({ data })
+      return data
     }
-  },
+  }
 }
