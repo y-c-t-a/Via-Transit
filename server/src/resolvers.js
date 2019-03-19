@@ -1,6 +1,6 @@
 module.exports = {
   Query: {
-    searchBusinessTerm: (_, { latitude, longitude, term }, { dataSources }) =>
+    callYelp: (_, { latitude, longitude, term }, { dataSources }) =>
       dataSources.YelpAPI.getBusinesses(latitude, longitude, term),
     getDirections: (
       _,
@@ -8,7 +8,7 @@ module.exports = {
         originLatitude,
         originLongitude,
         destinationLatitude,
-        destinationLongitude,
+        destinationLongitude
       },
       { dataSources }
     ) =>
@@ -17,6 +17,6 @@ module.exports = {
         originLongitude,
         destinationLatitude,
         destinationLongitude
-      ),
-  },
+      )
+  }
 }
