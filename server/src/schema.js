@@ -1,5 +1,6 @@
 const { gql } = require('apollo-server')
 
+// REVIEW: very much like
 const typeDefs = gql`
   type Query {
     searchBusinessTerm(

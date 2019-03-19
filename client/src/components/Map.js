@@ -2,12 +2,24 @@ import React, { Component } from 'react'
 import { GOOGLE_API_KEY } from '../secrets'
 
 export default class Map extends Component {
+  constructor(props) {
+    super(props)
+    this.mapContainer = React.createRef()
+  }
+  shouldComponentUpdate () {
+    return false
+  }
+  componentWillReceiveProps (nextProps) {
+    // make changes based on nextProps changes
+    this.directionsService
+  }
+
   onScriptLoad = () => {
     var markerArray = []
 
-    var directionsService = new window.google.maps.DirectionsService()
+    this.directionsService = new window.google.maps.DirectionsService()
 
-    var map = new window.google.maps.Map(document.getElementById('map'), {
+    var map = new window.google.maps.Map(this.mapContainer.current, {
       zoom: 13,
       center: { lat: 41.8955, lng: -87.6392 }
     })
@@ -71,6 +83,7 @@ export default class Map extends Component {
 
   componentDidMount() {
     if (!window.google) {
+      // REVIEW: interesting. Very interesting.
       var s = document.createElement('script')
       s.type = 'text/javascript'
       s.src = `https://maps.google.com/maps/api/js?key=${GOOGLE_API_KEY}`
@@ -87,6 +100,6 @@ export default class Map extends Component {
   }
 
   render() {
-    return <div style={{ width: 500, height: 500 }} id={this.props.id} />
+    return <div style={{ width: 500, height: 500 }}/>
   }
 }

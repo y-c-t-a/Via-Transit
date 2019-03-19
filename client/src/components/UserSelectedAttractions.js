@@ -16,7 +16,7 @@ export const READ_ATTRACTIONS = gql`
     }
   }
 `
-
+// REVIEW: Have you heard of hooks?
 export class UserSelectedAttractions extends Component {
   render() {
     return (

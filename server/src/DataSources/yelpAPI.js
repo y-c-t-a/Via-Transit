@@ -1,6 +1,8 @@
 const { RESTDataSource } = require('apollo-datasource-rest')
 const axios = require('axios')
 
+// REVIEW: injection/reflection? We are only as secure as yelp api
+//        graphql rocks
 class YelpAPI extends RESTDataSource {
   constructor() {
     super()

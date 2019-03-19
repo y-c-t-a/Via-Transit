@@ -54,6 +54,8 @@ cache.writeData({
 const client = new ApolloClient({
   connectToDevTools: true,
   link: new HttpLink({
+    // REVIEW: what's your configuration plan for this url in produciton?
+
     uri: 'http://localhost:4000/graphql'
   }),
   resolvers,
@@ -62,7 +64,13 @@ const client = new ApolloClient({
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <Map id="map" />
+    /my-travel-plans/:id
+    {props.params.match.id}
+    <Route path="/plans/:id" render={routerParams =>
+      <Map {...routerParams} key={routerParams.params.match.id}/>}
+    />
+
+    <Map />
     <UserSelectedAttractions />
     <YelpCategorySearch />
     <YelpMain />
