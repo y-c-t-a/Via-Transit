@@ -14,8 +14,8 @@ class YelpAPI extends RESTDataSource {
         this.businessBaseURL
       }term=${term}&latitude=${latitude}&longitude=${longitude}&limit`,
       headers: {
-        Authorization: `Bearer ${process.env.YELP_API_KEY}`,
-      },
+        Authorization: `Bearer ${process.env.YELP_API_KEY}`
+      }
     })
     return response.data
   }
