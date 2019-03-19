@@ -1,11 +1,13 @@
-import React from 'react'
-import { Query } from 'react-apollo'
-import gql from 'graphql-tag'
+import React from 'react';
+import { Query, Mutation } from 'react-apollo';
+import gql from 'graphql-tag';
+import { ALL_BUSINESSES } from '../resolvers';
 
 export const CALL_YELP = gql`
   query callYelp($latitude: Float!, $longitude: Float!, $term: String) {
     callYelp(latitude: $latitude, longitude: $longitude, term: $term) {
       businesses {
+        id
         price
         name
         rating
@@ -16,35 +18,39 @@ export const CALL_YELP = gql`
       }
     }
   }
-`
+`;
 
 export default class YelpAPI extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
   }
 
   render() {
-    // console.log('props', this.props.state)
-    const state = this.props.state
-    console.log('state', state)
-    console.log('coord', state.coordinates)
-    const { price, name, rating } = state
-    const { startLat, startLng } = state
+    const state = this.props.state;
+    const { price, name, rating } = state;
+    const { startLat, startLng } = state;
     const latitude = startLat,
-      longitude = startLng
+      longitude = startLng;
     return (
       <Query
         query={CALL_YELP}
         variables={{ price, name, rating, latitude, longitude }}
       >
         {({ data, loading, client, error }) => {
-          if (loading) return <h2>Loading...</h2>
-          if (error) return <p>ERROR: {error.message}</p>
-          // console.log(client.cache)
-          console.log(data)
-          return <h2>{data.callYelp.businesses[1].name}</h2>
+          if (loading) return <h2>Loading...</h2>;
+          if (error) return <p>ERROR: {error.message}</p>;
+
+          // return client.cache.writeData({ data: data.callYelp.businesses })
+
+          return (
+            <div>
+              <Mutation mutation={ALL_BUSINESSES}>
+                {/* {allBusinesses => allBusinesses({ variables: {businesses: data.callYelp.businesses} })} */}
+              </Mutation>
+            </div>
+          );
         }}
       </Query>
-    )
+    );
   }
 }
