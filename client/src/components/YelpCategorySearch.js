@@ -1,8 +1,7 @@
-import React from 'react';
-import { Mutation } from 'react-apollo';
-import { Select } from 'semantic-ui-react';
-import gql from 'graphql-tag';
-
+import React from 'react'
+import { Mutation } from 'react-apollo'
+import { Select } from 'semantic-ui-react'
+import gql from 'graphql-tag'
 
 export const UPDATE_TERM = gql`
   mutation updateTerm($term: String!) {
@@ -10,14 +9,20 @@ export const UPDATE_TERM = gql`
       term
     }
   }
-`;
+`
 
-const attractions = ["Restaurants", "Breakfast & Brunch", "Coffee & Tea"];
+const attractions = ['Restaurants', 'Breakfast & Brunch', 'Coffee & Tea']
 
 export default class YelpCategorySearch extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      term: ''
+    }
+  }
   render() {
     return (
-
+      <div>
         <Mutation mutation={UPDATE_TERM}>
           {updateTerm => (
             <Select
@@ -25,15 +30,16 @@ export default class YelpCategorySearch extends React.Component {
               options={attractions.map(attraction => ({
                 key: attraction,
                 text: attraction,
-                value: attraction,
+                value: attraction
               }))}
               onChange={(event, data) => {
-                updateTerm({variables: {term: data.value}})
+                updateTerm({ variables: { term: data.value } })
+                this.setState({ term: data.value })
               }}
-            >
-            </Select>
+            />
           )}
         </Mutation>
-    );
+      </div>
+    )
   }
 }

@@ -8,15 +8,22 @@ import YelpCategorySearch from './components/YelpCategorySearch'
 import Map from './components/Map'
 import { resolvers } from './resolvers'
 import UserSelectedAttractions from './components/UserSelectedAttractions'
+import YelpMain from './components/YelpMain'
 
 const cache = new InMemoryCache()
 
 cache.writeData({
   data: {
-    startLat: 41.8955,
-    startLng: -87.6392,
-    term: '',
-    businesses: [
+    readYelp: {
+      __typename: 'readYelp',
+      startLat: 41.8955,
+      startLng: -87.6392,
+      term: 'flooblar',
+      radius: 3,
+      rating: 4.8,
+      price: '$$'
+    },
+    userSelectedAttractions: [
       {
         __typename: 'business',
         price: '$',
@@ -25,8 +32,8 @@ cache.writeData({
         coordinates: {
           __typename: 'businessCords',
           latitude: 41.8938478,
-          longitude: -87.6361254,
-        },
+          longitude: -87.6361254
+        }
       },
       {
         __typename: 'business',
@@ -36,20 +43,21 @@ cache.writeData({
         coordinates: {
           __typename: 'businessCords',
           latitude: 41.9082438,
-          longitude: -87.6492494,
-        },
-      },
+          longitude: -87.6492494
+        }
+      }
     ],
-  },
+    returnedBusinesses: []
+  }
 })
 
 const client = new ApolloClient({
   connectToDevTools: true,
   link: new HttpLink({
-    uri: 'http://localhost:4000/graphql',
+    uri: 'http://localhost:4000/graphql'
   }),
   resolvers,
-  cache,
+  cache
 })
 
 ReactDOM.render(
@@ -57,6 +65,7 @@ ReactDOM.render(
     <Map id="map" />
     <UserSelectedAttractions />
     <YelpCategorySearch />
+    <YelpMain />
   </ApolloProvider>,
   document.getElementById('root')
 )
