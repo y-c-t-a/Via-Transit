@@ -13,24 +13,28 @@ const cache = new InMemoryCache()
 
 cache.writeData({
   data: {
-    latitude: 41.8955,
-    longitude: -87.6392,
+    startLat: 41.8955,
+    startLng: -87.6392,
     term: '',
     businesses: [
       {
+        __typename: 'business',
         price: '$',
         name: 'Dollop',
         rating: 4,
         coordinates: {
+          __typename: 'businessCords',
           latitude: 41.8938478,
           longitude: -87.6361254,
         },
       },
       {
+        __typename: 'business',
         price: '$$$',
         name: 'REI',
         rating: 3,
         coordinates: {
+          __typename: 'businessCords',
           latitude: 41.9082438,
           longitude: -87.6492494,
         },

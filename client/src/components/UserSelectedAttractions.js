@@ -4,8 +4,16 @@ import { Query } from 'react-apollo'
 // import { READ_BUSINESSES } from '../resolvers'
 
 export const READ_BUSINESSES = gql`
-  query readBusinesses {
-    latitude @client
+  query {
+    businesses @client {
+      price
+      name
+      rating
+      coordinates {
+        latitude
+        longitude
+      }
+    }
   }
 `
 
@@ -17,7 +25,8 @@ export class UserSelectedAttractions extends Component {
           if (loading) return <h2>Loading...</h2>
           if (error) return <p>ERROR: {error.message}</p>
           console.log(client.cache)
-          return <h2>Hey girl hey</h2>
+          console.log(data)
+          return <h2>{data.businesses[0].name}</h2>
         }}
       </Query>
     )
