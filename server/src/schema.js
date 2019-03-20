@@ -16,6 +16,7 @@ const typeDefs = gql`
   }
 
   type Business {
+    id: String
     rating: Float
     price: String
     name: String
