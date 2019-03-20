@@ -9,95 +9,105 @@ export default class DirectionsMap extends Component {
   onScriptLoad = () => {
     const userSelectedBusinesses = this.props.userSelectedBusinesses
 
-    var map = new window.google.maps.Map(document.getElementById('directionsMap'), {
-      zoom: 13,
-      center: { lat: 41.8955, lng: -87.6392 }
-    })
-
-    var directionsDisplay = new window.google.maps.DirectionsRenderer({
-      map: map
-    })
-
-    var markerArray = []
-    var directionsService = new window.google.maps.DirectionsService()
-    var stepDisplay = new window.google.maps.InfoWindow()
-
-    calculateAndDisplayRoute(directionsDisplay, directionsService, markerArray, stepDisplay, map)
-
-    function calculateAndDisplayRoute(directionsDisplay, directionsService, markerArray, stepDisplay, map) {
-      // First, remove any existing markers from the map.
-      for (var i = 0; i < markerArray.length; i++) {
-        markerArray[i].setMap(null)
+    var map = new window.google.maps.Map(
+      document.getElementById('directionsMap'),
+      {
+        zoom: 13,
+        center: { lat: 41.8955, lng: -87.6392 },
       }
+    );
 
-      // Retrieve the start and end locations and create a DirectionsRequest using
-      directionsService.route(
-        {
-          origin: {lat: userSelectedBusinesses[0].coordinates.latitude, lng:
-          userSelectedBusinesses[0].coordinates.longitude},
-          destination: {lat: userSelectedBusinesses[1].coordinates.latitude, lng: userSelectedBusinesses[1].coordinates.longitude},
-          travelMode: 'TRANSIT'
-        },
-        function(response, status) {
-          if (status === 'OK') {
-            directionsDisplay.setDirections(response)
-            showSteps(response, markerArray, stepDisplay, map)
-          } else {
-            window.alert('Directions request failed due to ' + status)
+    for (let i = 0; i < userSelectedBusinesses.length - 1; i++) {
+      var markerArray = []
+      var directionsService = new window.google.maps.DirectionsService()
+      var directionsRenderer = new window.google.maps.DirectionsRenderer({
+        map: map,
+      })
+      var stepDisplay = new window.google.maps.InfoWindow();
+
+      calculateAndDisplayRoute(
+        directionsRenderer,
+        directionsService,
+        markerArray,
+        stepDisplay,
+        map
+      );
+
+      function calculateAndDisplayRoute(
+        directionsRenderer,
+        directionsService,
+        markerArray,
+        stepDisplay,
+        map
+      ) {
+        // First, remove any existing markers from the map.
+        // for (var i = 0; i < markerArray.length; i++) {
+        //   markerArray[i].setMap(null)
+        // }
+
+        directionsService.route(
+          {
+            origin: {
+              lat: userSelectedBusinesses[i].coordinates.latitude,
+              lng: userSelectedBusinesses[i].coordinates.longitude,
+            },
+            destination: {
+              lat: userSelectedBusinesses[i + 1].coordinates.latitude,
+              lng: userSelectedBusinesses[i + 1].coordinates.longitude,
+            },
+            travelMode: 'TRANSIT',
+          },
+          function(response, status) {
+            if (status === 'OK') {
+              directionsRenderer.setDirections(response)
+              showSteps(response, markerArray, stepDisplay, map)
+            } else {
+              window.alert('Directions request failed due to ' + status)
+            }
+          }
+        );
+        function showSteps(directionResult, markerArray, stepDisplay, map) {
+          // For each step, place a marker, and add the text to the marker's infowindow.
+          // Also attach the marker to an array so we can keep track of it and remove it when calculating new routes.
+          var myRoute = directionResult.routes[0].legs[0]
+          for (var i = 0; i < myRoute.steps.length; i++) {
+            var marker = (markerArray[i] =
+              markerArray[i] || new window.google.maps.Marker())
+            marker.setMap(map);
+            marker.setPosition(myRoute.steps[i].start_location)
+            attachInstructionText(
+              stepDisplay, marker, myRoute.steps[i].instructions, map)
           }
         }
-      )
 
-      directionsService.route(
-        {
-          origin: {lat: userSelectedBusinesses[1].coordinates.latitude, lng:
-          userSelectedBusinesses[1].coordinates.longitude},
-          destination: {lat: userSelectedBusinesses[2].coordinates.latitude, lng: userSelectedBusinesses[2].coordinates.longitude},
-          travelMode: 'TRANSIT'
-        },
-        function(response, status) {
-          if (status === 'OK') {
-            directionsDisplay.setDirections(response)
-            showSteps(response, markerArray, stepDisplay, map)
-          } else {
-            window.alert('Directions request failed due to ' + status)
-          }
+        function attachInstructionText(stepDisplay, marker, text, map) {
+          window.google.maps.event.addListener(marker, 'click', function() {
+            stepDisplay.setContent(text)
+            stepDisplay.open(map, marker)
+          })
         }
-      )
-
-    }
-
-    function showSteps(directionResult, markerArray, stepDisplay, map) {
-      // For each step, place a marker, and add the text to the marker's infowindow.
-      // Also attach the marker to an array so we can keep track of it and remove it when calculating new routes.
-      var myRoute = directionResult.routes[0].legs[0]
-      for (var i = 0; i < myRoute.steps.length; i++) {
-        var marker = (markerArray[i] =
-          markerArray[i] || new window.google.maps.Marker())
-        marker.setMap(map)
-        marker.setPosition(myRoute.steps[i].start_location)
       }
     }
   }
 
   componentDidMount() {
     if (!window.google) {
-      var s = document.createElement('script')
-      s.type = 'text/javascript'
-      s.src = `https://maps.google.com/maps/api/js?key=${GOOGLE_API_KEY}`
-      var x = document.getElementsByTagName('script')[0]
-      x.parentNode.insertBefore(s, x)
+      var s = document.createElement('script');
+      s.type = 'text/javascript';
+      s.src = `https://maps.google.com/maps/api/js?key=${GOOGLE_API_KEY}`;
+      var x = document.getElementsByTagName('script')[0];
+      x.parentNode.insertBefore(s, x);
       // Below is important.
       //We cannot access google.maps until it's finished loading
       s.addEventListener('load', e => {
-        this.onScriptLoad()
-      })
+        this.onScriptLoad();
+      });
     } else {
-      this.onScriptLoad()
+      this.onScriptLoad();
     }
   }
 
   render() {
-    return <div style={{ width: 500, height: 500 }} id={this.props.id} />
+    return <div style={{ width: 500, height: 500 }} id={this.props.id} />;
   }
 }
