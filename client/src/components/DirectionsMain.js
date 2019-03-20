@@ -34,7 +34,7 @@ class DirectionsMain extends React.Component {
   }
 
   render() {
-    return this.state.userSelectedAttractions.length ? (
+    return this.state.userSelectedBusinesses.length ? (
       <div>
         <DirectionsMap
           id="directionsMap"
