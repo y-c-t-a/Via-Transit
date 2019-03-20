@@ -25,7 +25,7 @@ export class UserSelectedBusinesses extends Component {
           if (error) return <p>ERROR: {error.message}</p>
           // console.log(client.cache)
           // console.log(data)
-          return <h2>{data.UserSelectedBusinesseses[0].name}</h2>
+          // return <h2>{data.UserSelectedBusinesseses[0].name}</h2>
         }}
       </Query>
     )
