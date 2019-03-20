@@ -31,6 +31,7 @@ class DirectionsMain extends React.Component {
       query: READ_ITINERARY
     })
     this.setState({ userSelectedBusinesses: data.userSelectedBusinesses })
+    console.log('directions main state', this.state.userSelectedBusinesses)
   }
 
   render() {

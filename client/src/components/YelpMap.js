@@ -2,10 +2,27 @@ import React, { Component } from 'react'
 import { GOOGLE_API_KEY } from '../secrets'
 import SingleBusiness from './SingleBusiness'
 import ReactDOMServer from 'react-dom/server'
+import { READ_ITINERARY } from './DirectionsMain'
+import ReactDOM from 'react-dom'
+import { ApolloProvider } from 'react-apollo'
+
 export default class YelpMap extends Component {
   constructor(props) {
     super(props)
   }
+
+  // addToItinerary = async business => {
+  //   const { data } = await this.props.client.query({
+  //     query: READ_ITINERARY
+  //   })
+  //   this.props.client.writeQuery({
+  //     query: READ_ITINERARY,
+  //     data: {
+  //       userSelectedBusiness: [...data.userSelectedBusiness, business]
+  //     }
+  //   })
+  //   console.log('quiche', this.props.client.cache)
+  // }
 
   onScriptLoad = () => {
     const { returnedBusinesses } = this.props
@@ -14,24 +31,29 @@ export default class YelpMap extends Component {
 
     var map = new window.google.maps.Map(document.getElementById('yelpMap'), {
       zoom: 13,
-      center: { lat: 41.8955, lng: -87.6392 },
+      center: { lat: 41.8955, lng: -87.6392 }
     })
 
     returnedBusinesses.map(business => {
-      var contentString = ReactDOMServer.renderToString(
-        <SingleBusiness {...business} client={this.props.client} />
+      const div = document.createElement('div')
+      ReactDOM.render(
+        <ApolloProvider client={this.props.client}>
+          <SingleBusiness business={business} />
+        </ApolloProvider>,
+        div
       )
       var infowindow = new window.google.maps.InfoWindow({
-        content: contentString,
+        content: div
       })
       var marker = new window.google.maps.Marker({
         position: {
           lat: business.coordinates.latitude,
-          lng: business.coordinates.longitude,
+          lng: business.coordinates.longitude
         },
         map: map,
-        title: 'Yelp Attractions Result',
+        title: 'Yelp Attractions Result'
       })
+
       marker.addListener('click', function() {
         infowindow.open(map, marker)
       })
@@ -57,6 +79,7 @@ export default class YelpMap extends Component {
   }
 
   render() {
+    // console.log('yelp map props', this.props)
     return <div style={{ width: 500, height: 500 }} id={this.props.id} />
   }
 }
