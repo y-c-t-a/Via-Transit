@@ -22,7 +22,7 @@ export default class YelpMain extends React.Component {
     this.state = {
       startLat: 41.8955,
       startLng: -87.6392,
-      term: 'flooblar',
+      term: 'Coffee',
       radius: 3,
       rating: 4.8,
       price: '$$'

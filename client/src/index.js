@@ -62,7 +62,7 @@ const client = new ApolloClient({
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <Map id="map" />
+    {/* <Map id="directionsMap" /> */}
     <UserSelectedAttractions />
     <YelpCategorySearch />
     <YelpMain />
