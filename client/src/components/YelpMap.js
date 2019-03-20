@@ -11,21 +11,9 @@ export default class YelpMap extends Component {
     super(props)
   }
 
-  // addToItinerary = async business => {
-  //   const { data } = await this.props.client.query({
-  //     query: READ_ITINERARY
-  //   })
-  //   this.props.client.writeQuery({
-  //     query: READ_ITINERARY,
-  //     data: {
-  //       userSelectedBusiness: [...data.userSelectedBusiness, business]
-  //     }
-  //   })
-  //   console.log('quiche', this.props.client.cache)
-  // }
-
   onScriptLoad = () => {
     const { returnedBusinesses } = this.props
+    console.log('Map PROPS -->', this.props)
 
     var markerArray = []
 

@@ -17,28 +17,30 @@ export const READ_YELP = gql`
 `
 
 export default class YelpMain extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      startLat: 41.8955,
-      startLng: -87.6392,
-      term: 'Coffee',
-      radius: 3,
-      rating: 4.8,
-      price: '$$'
-    }
-  }
+  // constructor(props) {
+  //   super(props)
+  //   this.state = {
+  //     startLat: 41.8955,
+  //     startLng: -87.6392,
+  //     term: 'Coffee',
+  //     radius: 3,
+  //     rating: 4.8,
+  //     price: '$$'
+  //   }
+  // }
   render() {
+    console.log("this is YelpMain")
     return (
       <div>
         <Query query={READ_YELP}>
           {({ data, loading, client, error }) => {
             if (loading) return <h2>Loading...</h2>
             if (error) return <p>ERROR: {error.message}</p>
+            console.log(data.readYelp)
             return (
               <div>
-                <h2>{data.readYelp.term}</h2>
-                <YelpAPI state={data.readYelp} />
+                <h2>{data.readYelp.startLat}</h2>
+                <YelpAPI readYelp={data.readYelp} />
               </div>
             )
           }}
