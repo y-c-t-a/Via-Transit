@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { GOOGLE_API_KEY } from '../secrets'
-
+import SingleBusiness from './SingleBusiness'
+import ReactDOMServer from 'react-dom/server'
 export default class YelpMap extends Component {
   constructor(props) {
     super(props)
@@ -8,24 +9,31 @@ export default class YelpMap extends Component {
 
   onScriptLoad = () => {
     const { returnedBusinesses } = this.props
-    console.log(this.props)
 
     var markerArray = []
 
     var map = new window.google.maps.Map(document.getElementById('yelpMap'), {
       zoom: 13,
-      center: { lat: 41.8955, lng: -87.6392 }
+      center: { lat: 41.8955, lng: -87.6392 },
     })
 
     returnedBusinesses.map(business => {
-
+      var contentString = ReactDOMServer.renderToString(
+        <SingleBusiness {...business} client={this.props.client} />
+      )
+      var infowindow = new window.google.maps.InfoWindow({
+        content: contentString,
+      })
       var marker = new window.google.maps.Marker({
         position: {
           lat: business.coordinates.latitude,
-          lng: business.coordinates.longitude
+          lng: business.coordinates.longitude,
         },
         map: map,
-        title: "Yelp Attractions Result"
+        title: 'Yelp Attractions Result',
+      })
+      marker.addListener('click', function() {
+        infowindow.open(map, marker)
       })
       marker.setMap(map)
     })
