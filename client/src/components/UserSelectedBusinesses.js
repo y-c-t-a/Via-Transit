@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
-// import { READ_BUSINESSES } from '../resolvers'
 
-export const READ_ATTRACTIONS = gql`
+export const READ_BUSINESSES = gql`
   query {
-    userSelectedAttractions @client {
+    userSelectedBusinesses @client {
       price
       name
       rating
@@ -17,20 +16,20 @@ export const READ_ATTRACTIONS = gql`
   }
 `
 
-export class UserSelectedAttractions extends Component {
+export class UserSelectedBusinesses extends Component {
   render() {
     return (
-      <Query query={READ_ATTRACTIONS}>
+      <Query query={READ_BUSINESSES}>
         {({ data, loading, client, error }) => {
           if (loading) return <h2>Loading...</h2>
           if (error) return <p>ERROR: {error.message}</p>
           // console.log(client.cache)
           // console.log(data)
-          return <h2>{data.userSelectedAttractions[0].name}</h2>
+          return <h2>{data.UserSelectedBusinesseses[0].name}</h2>
         }}
       </Query>
     )
   }
 }
 
-export default UserSelectedAttractions
+export default UserSelectedBusinesses

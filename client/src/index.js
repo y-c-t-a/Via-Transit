@@ -5,9 +5,9 @@ import { HttpLink } from 'apollo-link-http'
 import { ApolloProvider } from 'react-apollo'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import YelpCategorySearch from './components/YelpCategorySearch'
-import Map from './components/Map'
+import DirectionsMain from './components/DirectionsMain'
 import { resolvers } from './resolvers'
-import UserSelectedAttractions from './components/UserSelectedAttractions'
+import UserSelectedBusinesses from './components/UserSelectedBusinesses'
 import YelpMain from './components/YelpMain'
 
 const cache = new InMemoryCache()
@@ -23,7 +23,7 @@ cache.writeData({
       rating: 4.8,
       price: '$$'
     },
-    userSelectedAttractions: [
+    userSelectedBusinesses: [
       {
         __typename: 'business',
         price: '$',
@@ -45,6 +45,17 @@ cache.writeData({
           latitude: 41.9082438,
           longitude: -87.6492494
         }
+      },
+      {
+        __typename: 'business',
+        price: '$$',
+        name: 'Wrigley Field',
+        rating: 2.5,
+        coordinates: {
+          __typename: 'businessCords',
+          latitude: 41.9413393,
+          longitude: -87.655412
+        }
       }
     ],
     returnedBusinesses: []
@@ -62,10 +73,10 @@ const client = new ApolloClient({
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    {/* <Map id="directionsMap" /> */}
-    <UserSelectedAttractions />
+    <UserSelectedBusinesses />
     <YelpCategorySearch />
     <YelpMain />
+    <DirectionsMain />
   </ApolloProvider>,
   document.getElementById('root')
 )
