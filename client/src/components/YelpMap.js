@@ -1,28 +1,10 @@
 import React, { Component } from 'react'
 import { GOOGLE_API_KEY } from '../secrets'
 import SingleBusiness from './SingleBusiness'
-import ReactDOMServer from 'react-dom/server'
-import { READ_ITINERARY } from './DirectionsMain'
 import ReactDOM from 'react-dom'
 import { ApolloProvider } from 'react-apollo'
 
 export default class YelpMap extends Component {
-  constructor(props) {
-    super(props)
-  }
-
-  // addToItinerary = async business => {
-  //   const { data } = await this.props.client.query({
-  //     query: READ_ITINERARY
-  //   })
-  //   this.props.client.writeQuery({
-  //     query: READ_ITINERARY,
-  //     data: {
-  //       userSelectedBusiness: [...data.userSelectedBusiness, business]
-  //     }
-  //   })
-  //   console.log('quiche', this.props.client.cache)
-  // }
 
   onScriptLoad = () => {
     const { returnedBusinesses } = this.props
@@ -79,7 +61,6 @@ export default class YelpMap extends Component {
   }
 
   render() {
-    // console.log('yelp map props', this.props)
     return <div style={{ width: 500, height: 500 }} id={this.props.id} />
   }
 }

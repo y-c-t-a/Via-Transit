@@ -1,10 +1,5 @@
 import gql from 'graphql-tag'
 import UPDATE_SELECTED_BUSINESSES from './components/SingleBusiness'
-// export const GET_CURRENT_TERM = gql`
-//   query getCurrentTerm {
-//     term @client
-//   }
-// `
 
 // export const typeDefs = gql`
 //   extend type Business {
@@ -16,15 +11,38 @@ import UPDATE_SELECTED_BUSINESSES from './components/SingleBusiness'
 //   }
 // `
 
-export const ALL_BUSINESSES = gql`
-  mutation allBusinesses($businesses: [Business]) {
-    allBusinesses(businesses: $businesses) @client {
-      returnedBusinesses
+export const CALL_YELP = gql`
+  query callYelp($latitude: Float!, $longitude: Float!, $term: String) {
+    callYelp(latitude: $latitude, longitude: $longitude, term: $term) {
+      businesses {
+        id
+        price
+        name
+        rating
+        coordinates {
+          latitude
+          longitude
+        }
+      }
     }
   }
 `
+
+
 export const resolvers = {
-  Query: {},
+  Query: {
+    callYelp: (_, { latitude, longitude, term }, { cache }) => {
+      const { data } = cache.query({
+        query: CALL_YELP,
+        variables: { latitude, longitude, term }
+      })
+      cache.writeData({
+        id: 'returnedBusinesses',
+        data: data.callYelp.businesses
+      })
+      return data
+    }
+  },
 
   Mutation: {
     updateTerm: (_, { term }, { cache }) => {
@@ -33,13 +51,6 @@ export const resolvers = {
       }
       cache.writeData({ data })
       return data.term
-    },
-    allBusinesses: (_, { businesses }, { cache }) => {
-      const data = {
-        returnedBusinesses: businesses
-      }
-      cache.writeData({ data })
-      return data
     },
     updateSelectedBusinesses: (_, { business }, { cache }) => {
       const currentSelectedBusinesses = cache.readQuery({

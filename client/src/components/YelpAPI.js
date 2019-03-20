@@ -1,67 +1,40 @@
-import React from 'react'
-import { Query, withApollo } from 'react-apollo'
-import gql from 'graphql-tag'
-import YelpMap from './YelpMap'
+import React from 'react';
+import { Query } from 'react-apollo';
+import YelpMap from './YelpMap';
+import { CALL_YELP } from '../resolvers';
 
-export const CALL_YELP = gql`
-  query callYelp($latitude: Float!, $longitude: Float!, $term: String) {
-    callYelp(latitude: $latitude, longitude: $longitude, term: $term) {
-      businesses {
-        id
-        price
-        name
-        rating
-        coordinates {
-          latitude
-          longitude
-        }
-      }
-    }
-  }
-`
+export default function YelpAPI(props) {
+  const {
+    startLat,
+    startLng,
+    term
+  } = props.readYelp
+  const latitude = startLat
+  const longitude = startLng
+  return (
+    <div>
+      <Query
+        query={CALL_YELP}
+        variables={{ latitude, longitude, term }}
+      >
+        {({ data, loading, error, client }) => {
+          if (loading) return <h2>Loading...</h2>;
+          if (error) return <p>ERROR: {error.message}</p>;
 
-class YelpAPI extends React.PureComponent {
-  constructor(props) {
-    super(props)
-    this.state = {
-      returnedBusinesses: []
-    }
-  }
+          console.log('YelpAPI rerender')
 
-  async componentDidMount() {
-    const state = this.props.state
-    const client = this.props.client
-    const { price, name, rating, term } = state
-    const { startLat, startLng } = state
-    const latitude = startLat,
-      longitude = startLng
-
-    const { data } = await client.query({
-      query: CALL_YELP,
-      variables: { latitude, longitude, term }
-    })
-    this.setState({ returnedBusinesses: data.callYelp.businesses })
-    client.cache.writeData({
-      id: 'returnedBusinesses',
-      data: data.callYelp.businesses
-    })
-    // console.log('this is state $$$', this.state.returnedBusinesses)
-  }
-
-  render() {
-    console.log('yelpAPI =', this.props)
-    return this.state.returnedBusinesses.length ? (
-      <div>
-        <YelpMap
-          id="yelpMap"
-          returnedBusinesses={this.state.returnedBusinesses}
-          client={this.props.client}
-        />
-      </div>
-    ) : (
-      <div>Loading</div>
-    )
-  }
+          return (
+            <div>
+              <h2>{data.callYelp.businesses[0].name}</h2>
+              <YelpMap
+                id="yelpMap"
+                returnedBusinesses={data.callYelp.businesses}
+                client={client}
+              />
+            </div>
+          );
+        }}
+      </Query>
+    </div>
+  )
 }
-
-export default withApollo(YelpAPI)

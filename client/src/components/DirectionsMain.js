@@ -1,5 +1,5 @@
 import React from 'react'
-import { Query, withApollo } from 'react-apollo'
+import { withApollo } from 'react-apollo'
 import gql from 'graphql-tag'
 import DirectionsMap from './DirectionsMap'
 
@@ -31,7 +31,6 @@ class DirectionsMain extends React.Component {
       query: READ_ITINERARY
     })
     this.setState({ userSelectedBusinesses: data.userSelectedBusinesses })
-    console.log('directions main state', this.state.userSelectedBusinesses)
   }
 
   render() {

@@ -14,12 +14,7 @@ export const UPDATE_TERM = gql`
 const attractions = ['Restaurants', 'Breakfast & Brunch', 'Coffee & Tea']
 
 export default class YelpCategorySearch extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      term: ''
-    }
-  }
+
   render() {
     return (
       <div>
@@ -34,7 +29,6 @@ export default class YelpCategorySearch extends React.Component {
               }))}
               onChange={(event, data) => {
                 updateTerm({ variables: { term: data.value } })
-                this.setState({ term: data.value })
               }}
             />
           )}
