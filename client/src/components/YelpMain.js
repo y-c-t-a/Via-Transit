@@ -35,11 +35,14 @@ export default class YelpMain extends React.Component {
           {({ data, loading, client, error }) => {
             if (loading) return <h2>Loading...</h2>
             if (error) return <p>ERROR: {error.message}</p>
-
-            return <h2>{data.readYelp.term}</h2>
+            return (
+              <div>
+                <h2>{data.readYelp.term}</h2>
+                <YelpAPI state={data.readYelp} />
+              </div>
+            )
           }}
         </Query>
-        <YelpAPI state={this.state} />
       </div>
     )
   }
