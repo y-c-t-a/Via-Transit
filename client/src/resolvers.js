@@ -6,15 +6,15 @@ import UPDATE_SELECTED_BUSINESSES from './components/SingleBusiness'
 //   }
 // `
 
-export const typeDefs = gql`
-  extend type Business {
-    id: String
-    rating: Float
-    price: String
-    name: String
-    coordinates: Coordinates
-  }
-`
+// export const typeDefs = gql`
+//   extend type Business {
+//     id: String
+//     rating: Float
+//     price: String
+//     name: String
+//     coordinates: Coordinates
+//   }
+// `
 
 export const ALL_BUSINESSES = gql`
   mutation allBusinesses($businesses: [Business]) {
@@ -29,27 +29,27 @@ export const resolvers = {
   Mutation: {
     updateTerm: (_, { term }, { cache }) => {
       const data = {
-        term: term,
+        term: term
       }
       cache.writeData({ data })
       return data.term
     },
     allBusinesses: (_, { businesses }, { cache }) => {
       const data = {
-        returnedBusinesses: businesses,
+        returnedBusinesses: businesses
       }
       cache.writeData({ data })
       return data
     },
     updateSelectedBusinesses: (_, { business }, { cache }) => {
       const currentSelectedBusinesses = cache.readQuery({
-        query: UPDATE_SELECTED_BUSINESSES,
+        query: UPDATE_SELECTED_BUSINESSES
       })
       const data = {
-        userSelectedBusinesses: [...currentSelectedBusinesses, business],
+        userSelectedBusinesses: [...currentSelectedBusinesses, business]
       }
 
       cache.writeQuery({ query: UPDATE_SELECTED_BUSINESSES, data })
-    },
-  },
+    }
+  }
 }

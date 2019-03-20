@@ -24,7 +24,7 @@ class YelpAPI extends React.PureComponent {
   constructor(props) {
     super(props)
     this.state = {
-      returnedBusinesses: [],
+      returnedBusinesses: []
     }
   }
 
@@ -38,14 +38,14 @@ class YelpAPI extends React.PureComponent {
 
     const { data } = await client.query({
       query: CALL_YELP,
-      variables: { latitude, longitude, term },
+      variables: { latitude, longitude, term }
     })
     this.setState({ returnedBusinesses: data.callYelp.businesses })
     client.cache.writeData({
       id: 'returnedBusinesses',
-      data: data.callYelp.businesses,
+      data: data.callYelp.businesses
     })
-    console.log('this is state $$$', this.state.returnedBusinesses)
+    // console.log('this is state $$$', this.state.returnedBusinesses)
   }
 
   render() {

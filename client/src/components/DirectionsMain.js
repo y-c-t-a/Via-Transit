@@ -21,16 +21,17 @@ class DirectionsMain extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      userSelectedBusinesses: [],
+      userSelectedBusinesses: []
     }
   }
 
   async componentDidMount() {
     const client = this.props.client
     const { data } = await client.query({
-      query: READ_ITINERARY,
+      query: READ_ITINERARY
     })
     this.setState({ userSelectedBusinesses: data.userSelectedBusinesses })
+    console.log('directions main state', this.state.userSelectedBusinesses)
   }
 
   render() {
