@@ -7,7 +7,7 @@ export default class Map extends Component {
 
     var directionsService = new window.google.maps.DirectionsService()
 
-    var map = new window.google.maps.Map(document.getElementById('map'), {
+    var map = new window.google.maps.Map(document.getElementById('directionsMap'), {
       zoom: 13,
       center: { lat: 41.8955, lng: -87.6392 }
     })
