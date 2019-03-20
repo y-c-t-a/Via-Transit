@@ -1,7 +1,7 @@
-import React from 'react';
-import { Query, withApollo } from 'react-apollo';
-import gql from 'graphql-tag';
-import DirectionsMap from './DirectionsMap';
+import React from 'react'
+import { Query, withApollo } from 'react-apollo'
+import gql from 'graphql-tag'
+import DirectionsMap from './DirectionsMap'
 
 export const READ_ITINERARY = gql`
   query readItinerary {
@@ -15,22 +15,22 @@ export const READ_ITINERARY = gql`
       }
     }
   }
-`;
+`
 
 class DirectionsMain extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       userSelectedBusinesses: [],
-    };
+    }
   }
 
   async componentDidMount() {
-    const client = this.props.client;
+    const client = this.props.client
     const { data } = await client.query({
       query: READ_ITINERARY,
-    });
-    this.setState({ userSelectedBusinesses: data.userSelectedBusinesses });
+    })
+    this.setState({ userSelectedBusinesses: data.userSelectedBusinesses })
   }
 
   render() {
@@ -43,8 +43,8 @@ class DirectionsMain extends React.Component {
       </div>
     ) : (
       <div>Loading</div>
-    );
+    )
   }
 }
 
-export default withApollo(DirectionsMain);
+export default withApollo(DirectionsMain)
