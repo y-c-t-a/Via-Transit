@@ -19,7 +19,7 @@ export default class YelpMap extends Component {
 
     returnedBusinesses.map(business => {
       var contentString = ReactDOMServer.renderToString(
-        <SingleBusiness {...business} />
+        <SingleBusiness {...business} client={this.props.client} />
       )
       var infowindow = new window.google.maps.InfoWindow({
         content: contentString,
