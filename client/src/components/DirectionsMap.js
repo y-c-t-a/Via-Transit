@@ -2,9 +2,6 @@ import React, { Component } from 'react'
 import { GOOGLE_API_KEY } from '../secrets'
 
 export default class DirectionsMap extends Component {
-  constructor(props) {
-    super(props)
-  }
 
   onScriptLoad = () => {
     const userSelectedBusinesses = this.props.userSelectedBusinesses

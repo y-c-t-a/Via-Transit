@@ -1,5 +1,5 @@
 import React from 'react'
-import { Query, withApollo } from 'react-apollo'
+import { withApollo } from 'react-apollo'
 import gql from 'graphql-tag'
 import DirectionsMap from './DirectionsMap'
 

@@ -23,8 +23,6 @@ export class UserSelectedBusinesses extends Component {
         {({ data, loading, client, error }) => {
           if (loading) return <h2>Loading...</h2>
           if (error) return <p>ERROR: {error.message}</p>
-          // console.log(client.cache)
-          // console.log(data)
           return <h2>hey</h2>
         }}
       </Query>

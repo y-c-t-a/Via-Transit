@@ -28,17 +28,10 @@ export const CALL_YELP = gql`
   }
 `
 
-export const ALL_BUSINESSES = gql`
-  mutation allBusinesses($businesses: [Business]) {
-    allBusinesses(businesses: $businesses) @client {
-      returnedBusinesses
-    }
-  }
-`
+
 export const resolvers = {
   Query: {
     callYelp: (_, { latitude, longitude, term }, { cache }) => {
-      console.log('this is the resolver')
       const { data } = cache.query({
         query: CALL_YELP,
         variables: { latitude, longitude, term }
@@ -58,13 +51,6 @@ export const resolvers = {
       }
       cache.writeData({ data })
       return data.term
-    },
-    allBusinesses: (_, { businesses }, { cache }) => {
-      const data = {
-        returnedBusinesses: businesses
-      }
-      cache.writeData({ data })
-      return data
     },
     updateSelectedBusinesses: (_, { business }, { cache }) => {
       const currentSelectedBusinesses = cache.readQuery({

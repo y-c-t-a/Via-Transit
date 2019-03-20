@@ -1,35 +1,13 @@
 import React from 'react';
-import { Query, withApollo } from 'react-apollo';
-import gql from 'graphql-tag';
+import { Query } from 'react-apollo';
 import YelpMap from './YelpMap';
 import { CALL_YELP } from '../resolvers';
 
-// export const CALL_YELP = gql`
-//   query callYelp($latitude: Float!, $longitude: Float!, $term: String) {
-//     callYelp(latitude: $latitude, longitude: $longitude, term: $term) {
-//       businesses {
-//         id
-//         price
-//         name
-//         rating
-//         coordinates {
-//           latitude
-//           longitude
-//         }
-//       }
-//     }
-//   }
-// `
-
 export default function YelpAPI(props) {
-  console.log('this is props', props)
   const {
     startLat,
     startLng,
-    term,
-    radius,
-    rating,
-    price,
+    term
   } = props.readYelp
   const latitude = startLat
   const longitude = startLng
@@ -42,7 +20,9 @@ export default function YelpAPI(props) {
         {({ data, loading, error, client }) => {
           if (loading) return <h2>Loading...</h2>;
           if (error) return <p>ERROR: {error.message}</p>;
-          console.log('this is data --->', data);
+
+          console.log('YelpAPI rerender')
+
           return (
             <div>
               <h2>{data.callYelp.businesses[0].name}</h2>
