@@ -26,53 +26,56 @@ cache.writeData({
     userSelectedBusinesses: [
       {
         __typename: 'Business',
+        id: 1,
         price: '$',
         name: 'Dollop',
         rating: 4,
         coordinates: {
           __typename: 'Coordinates',
           latitude: 41.8938478,
-          longitude: -87.6361254
-        }
+          longitude: -87.6361254,
+        },
       },
       {
         __typename: 'Business',
+        id: 2,
         price: '$$$',
         name: 'REI',
         rating: 3,
         coordinates: {
           __typename: 'Coordinates',
           latitude: 41.9082438,
-          longitude: -87.6492494
-        }
+          longitude: -87.6492494,
+        },
       },
       {
         __typename: 'Business',
+        id: 3,
         price: '$$',
         name: 'Wrigley Field',
         rating: 2.5,
         coordinates: {
           __typename: 'Coordinates',
           latitude: 41.9413393,
-          longitude: -87.655412
-        }
-      }
+          longitude: -87.655412,
+        },
+      },
     ],
     businesses: [
       {
-        __typename: 'Business'
-      }
-    ]
-  }
+        __typename: 'Business',
+      },
+    ],
+  },
 })
 
 const client = new ApolloClient({
   connectToDevTools: true,
   link: new HttpLink({
-    uri: 'http://localhost:4000/graphql'
+    uri: 'http://localhost:4000/graphql',
   }),
   resolvers,
-  cache
+  cache,
 })
 
 ReactDOM.render(

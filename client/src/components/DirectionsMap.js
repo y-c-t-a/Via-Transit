@@ -11,7 +11,7 @@ export default class DirectionsMap extends Component {
       document.getElementById('directionsMap'),
       {
         zoom: 13,
-        center: { lat: 41.8955, lng: -87.6392 }
+        center: { lat: 41.8955, lng: -87.6392 },
       }
     )
 
@@ -19,7 +19,7 @@ export default class DirectionsMap extends Component {
       var markerArray = []
       var directionsService = new window.google.maps.DirectionsService()
       var directionsRenderer = new window.google.maps.DirectionsRenderer({
-        map: map
+        map: map,
       })
       var stepDisplay = new window.google.maps.InfoWindow()
 
@@ -47,13 +47,13 @@ export default class DirectionsMap extends Component {
           {
             origin: {
               lat: userSelectedBusinesses[i].coordinates.latitude,
-              lng: userSelectedBusinesses[i].coordinates.longitude
+              lng: userSelectedBusinesses[i].coordinates.longitude,
             },
             destination: {
               lat: userSelectedBusinesses[i + 1].coordinates.latitude,
-              lng: userSelectedBusinesses[i + 1].coordinates.longitude
+              lng: userSelectedBusinesses[i + 1].coordinates.longitude,
             },
-            travelMode: 'TRANSIT'
+            travelMode: 'TRANSIT',
           },
           function(response, status) {
             if (status === 'OK') {

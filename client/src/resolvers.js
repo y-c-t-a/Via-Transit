@@ -38,19 +38,19 @@ export const resolvers = {
       })
       client.writeData({
         id: 'businesses',
-        data: data.callYelp.businesses
+        data: data.callYelp.businesses,
       })
       return data
-    }
+    },
   },
 
   Mutation: {
     updateTerm: (_, { term }, { client }) => {
       const { readYelp } = client.readQuery({
-        query: READ_YELP
+        query: READ_YELP,
       })
       const data = {
-        readYelp: { ...readYelp, term }
+        readYelp: { ...readYelp, term },
       }
       console.log('term data', data)
       client.writeQuery({ query: READ_YELP, data })
@@ -70,13 +70,13 @@ export const resolvers = {
     updateSelectedBusinesses: (_, { business }, { client }) => {
       console.log('hi')
       const currentSelectedBusinesses = client.readQuery({
-        query: UPDATE_SELECTED_BUSINESSES
+        query: UPDATE_SELECTED_BUSINESSES,
       })
       const data = {
-        userSelectedBusinesses: [...currentSelectedBusinesses, business]
+        userSelectedBusinesses: [...currentSelectedBusinesses, business],
       }
       console.log('data', data)
       client.writeQuery({ query: UPDATE_SELECTED_BUSINESSES, data })
-    }
-  }
+    },
+  },
 }
