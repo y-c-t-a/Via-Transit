@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import { GOOGLE_API_KEY } from '../secrets'
 
 export default class DirectionsMap extends Component {
-  onScriptLoad = () => {
-    const userSelectedBusinesses = this.props.userSelectedBusinesses
+  onScriptLoad = props => {
+    if (!props) props = this.props
+    const userSelectedBusinesses = props.userSelectedBusinesses
 
     // console.log('props', this.props.userSelectedBusinesses)
 
@@ -111,7 +112,7 @@ export default class DirectionsMap extends Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     if (this.props !== nextProps) {
-      this.onScriptLoad()
+      this.onScriptLoad(nextProps)
       return true
     } else return false
   }

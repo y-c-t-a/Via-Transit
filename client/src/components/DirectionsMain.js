@@ -29,12 +29,16 @@ export default class DirectionsMain extends React.Component {
             if (error) return <p>ERROR: {error.message}</p>
             console.log('data', data.userSelectedBusinesses)
             return (
-              <div>
-                <DirectionsMap
-                  id="directionsMap"
-                  userSelectedBusinesses={data.userSelectedBusinesses}
-                />
-                <UserSelectedBusinesses client={client} />
+              <div style={{ display: 'inline-block' }}>
+                <div style={{ float: 'left' }}>
+                  <DirectionsMap
+                    id="directionsMap"
+                    userSelectedBusinesses={data.userSelectedBusinesses}
+                  />
+                </div>
+                <div style={{ float: 'right' }}>
+                  <UserSelectedBusinesses client={client} />
+                </div>
               </div>
             )
           }}
