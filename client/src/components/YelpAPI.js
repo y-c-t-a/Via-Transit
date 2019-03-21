@@ -4,12 +4,12 @@ import YelpMap from './YelpMap'
 import { CALL_YELP } from '../resolvers'
 
 export default function YelpAPI(props) {
-  const { startLat, startLng, term } = props.readYelp
+  const { startLat, startLng, term, price } = props.readYelp
   const latitude = startLat
   const longitude = startLng
   return (
     <div>
-      <Query query={CALL_YELP} variables={{ latitude, longitude, term }}>
+      <Query query={CALL_YELP} variables={{ latitude, longitude, term, price }}>
         {({ data, loading, error, client }) => {
           if (loading) return <h2>Loading...</h2>
           if (error) return <p>ERROR: {error.message}</p>

@@ -17,7 +17,7 @@ class SingleBusiness extends React.Component {
     const previous = await this.props.client.readQuery({
       query: READ_ITINERARY
     })
-    this.props.client.writeQuery({
+    await this.props.client.writeQuery({
       query: READ_ITINERARY,
       data: {
         userSelectedBusinesses: [

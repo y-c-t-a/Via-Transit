@@ -2,7 +2,12 @@ const { gql } = require('apollo-server')
 
 const typeDefs = gql`
   type Query {
-    callYelp(latitude: Float!, longitude: Float!, term: String): Businesses
+    callYelp(
+      latitude: Float!
+      longitude: Float!
+      term: String
+      price: Int
+    ): Businesses
     getDirections(
       originLatitude: Float!
       originLongitude: Float!
