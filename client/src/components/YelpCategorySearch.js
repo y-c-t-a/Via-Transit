@@ -11,10 +11,14 @@ export const UPDATE_TERM = gql`
   }
 `
 
-const attractions = ['Restaurants', 'Breakfast & Brunch', 'Coffee & Tea']
+const attractions = [
+  'Restaurants',
+  'Breakfast & Brunch',
+  'Coffee & Tea',
+  'Movies'
+]
 
 export default class YelpCategorySearch extends React.Component {
-
   render() {
     return (
       <div>

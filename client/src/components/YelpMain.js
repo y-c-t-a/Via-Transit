@@ -1,9 +1,9 @@
-import React from 'react';
-import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
-import YelpAPI from './YelpAPI';
-import YelpCategorySearch from './YelpCategorySearch';
-import { Button } from 'semantic-ui-react';
+import React from 'react'
+import { Query } from 'react-apollo'
+import gql from 'graphql-tag'
+import YelpAPI from './YelpAPI'
+import YelpCategorySearch from './YelpCategorySearch'
+import { Button } from 'semantic-ui-react'
 
 export const READ_YELP = gql`
   query {
@@ -16,7 +16,7 @@ export const READ_YELP = gql`
       price
     }
   }
-`;
+`
 
 export default class YelpMain extends React.Component {
   render() {
@@ -24,9 +24,10 @@ export default class YelpMain extends React.Component {
       <div>
         <Query query={READ_YELP} notifyOnNetworkStatusChange>
           {({ data, loading, error, refetch, networkStatus }) => {
-            if (networkStatus === 4) return 'Refreshing!';
-            if (loading) return <h2>Loading...</h2>;
-            if (error) return <p>ERROR: {error.message}</p>;
+            if (networkStatus === 4) return 'Refreshing!'
+            if (loading) return <h2>Loading...</h2>
+            if (error) return <p>ERROR: {error.message}</p>
+            console.log('data.readYelp', data.readYelp)
             return (
               <div>
                 <h2>{data.readYelp.startLat}</h2>
@@ -34,10 +35,10 @@ export default class YelpMain extends React.Component {
                 <YelpCategorySearch />
                 <Button onClick={() => refetch()}>Search!</Button>
               </div>
-            );
+            )
           }}
         </Query>
       </div>
-    );
+    )
   }
 }
