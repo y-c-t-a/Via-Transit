@@ -3,6 +3,7 @@ import { withApollo } from 'react-apollo'
 import gql from 'graphql-tag'
 import DirectionsMap from './DirectionsMap'
 import { Query } from 'react-apollo'
+import UserSelectedBusinesses from './UserSelectedBusinesses'
 
 export const READ_ITINERARY = gql`
   query readItinerary {
@@ -23,15 +24,18 @@ export default class DirectionsMain extends React.Component {
     return (
       <div>
         <Query query={READ_ITINERARY}>
-          {({ data, loading, error }) => {
+          {({ data, loading, error, client }) => {
             if (loading) return <h2>Loading...</h2>
             if (error) return <p>ERROR: {error.message}</p>
             console.log('data', data.userSelectedBusinesses)
             return (
-              <DirectionsMap
-                id="directionsMap"
-                userSelectedBusinesses={data.userSelectedBusinesses}
-              />
+              <div>
+                <DirectionsMap
+                  id="directionsMap"
+                  userSelectedBusinesses={data.userSelectedBusinesses}
+                />
+                <UserSelectedBusinesses client={client} />
+              </div>
             )
           }}
         </Query>
