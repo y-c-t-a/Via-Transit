@@ -3,7 +3,7 @@ import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import YelpAPI from './YelpAPI'
 import YelpCategorySearch from './YelpCategorySearch'
-import { Button } from 'semantic-ui-react'
+import YelpPrice from './YelpPrice'
 
 export const READ_YELP = gql`
   query {
@@ -22,17 +22,15 @@ export default class YelpMain extends React.Component {
   render() {
     return (
       <div>
-        <Query query={READ_YELP} notifyOnNetworkStatusChange>
+        <Query query={READ_YELP}>
           {({ data, loading, error, refetch, networkStatus }) => {
-            if (networkStatus === 4) return 'Refreshing!'
             if (loading) return <h2>Loading...</h2>
             if (error) return <p>ERROR: {error.message}</p>
             return (
               <div>
-                <h2>{data.readYelp.startLat}</h2>
                 <YelpAPI readYelp={data.readYelp} />
                 <YelpCategorySearch />
-                <Button onClick={() => refetch()}>Search!</Button>
+                <YelpPrice />
               </div>
             )
           }}

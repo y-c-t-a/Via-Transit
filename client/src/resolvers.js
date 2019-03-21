@@ -3,8 +3,18 @@ import UPDATE_SELECTED_BUSINESSES from './components/SingleBusiness'
 import { READ_YELP } from './components/YelpMain'
 
 export const CALL_YELP = gql`
-  query callYelp($latitude: Float!, $longitude: Float!, $term: String) {
-    callYelp(latitude: $latitude, longitude: $longitude, term: $term) {
+  query callYelp(
+    $latitude: Float!
+    $longitude: Float!
+    $term: String
+    $price: Int
+  ) {
+    callYelp(
+      latitude: $latitude
+      longitude: $longitude
+      term: $term
+      price: $price
+    ) {
       businesses {
         id
         price
@@ -21,10 +31,10 @@ export const CALL_YELP = gql`
 
 export const resolvers = {
   Query: {
-    callYelp: (_, { latitude, longitude, term }, { client }) => {
+    callYelp: (_, { latitude, longitude, term, price }, { client }) => {
       const { data } = client.query({
         query: CALL_YELP,
-        variables: { latitude, longitude, term },
+        variables: { latitude, longitude, term, price }
       })
       client.writeData({
         id: 'businesses',
@@ -42,6 +52,18 @@ export const resolvers = {
       const data = {
         readYelp: { ...readYelp, term },
       }
+      console.log('term data', data)
+      client.writeQuery({ query: READ_YELP, data })
+      return data
+    },
+    updatePrice: (_, { price }, { client }) => {
+      const { readYelp } = client.readQuery({
+        query: READ_YELP
+      })
+      const data = {
+        readYelp: { ...readYelp, price }
+      }
+      console.log('price data', data)
       client.writeQuery({ query: READ_YELP, data })
       return data
     },
