@@ -58,7 +58,11 @@ cache.writeData({
         }
       }
     ],
-    returnedBusinesses: []
+    businesses: [
+      {
+        __typename: 'Business'
+      }
+    ]
   }
 })
 

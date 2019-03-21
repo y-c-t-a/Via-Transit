@@ -1,5 +1,6 @@
 import gql from 'graphql-tag'
 import UPDATE_SELECTED_BUSINESSES from './components/SingleBusiness'
+import { READ_YELP } from './components/YelpMain'
 
 // export const typeDefs = gql`
 //   extend type Business {
@@ -28,39 +29,43 @@ export const CALL_YELP = gql`
   }
 `
 
-
 export const resolvers = {
   Query: {
-    callYelp: (_, { latitude, longitude, term }, { cache }) => {
-      const { data } = cache.query({
+    callYelp: (_, { latitude, longitude, term }, { client }) => {
+      const { data } = client.query({
         query: CALL_YELP,
         variables: { latitude, longitude, term }
       })
-      cache.writeData({
-        id: 'returnedBusinesses',
+      client.writeData({
+        id: 'businesses',
         data: data.callYelp.businesses
       })
+      console.log('returned businiesses', data)
       return data
     }
   },
 
   Mutation: {
-    updateTerm: (_, { term }, { cache }) => {
+    updateTerm: (_, { term }, { client }) => {
+      const { readYelp } = client.readQuery({
+        query: READ_YELP
+      })
       const data = {
-        term: term
+        readYelp: { ...readYelp, term }
       }
-      cache.writeData({ data })
-      return data.term
+      client.writeQuery({ query: READ_YELP, data })
+      console.log('term??', client.cache)
+      return data
     },
-    updateSelectedBusinesses: (_, { business }, { cache }) => {
-      const currentSelectedBusinesses = cache.readQuery({
+    updateSelectedBusinesses: (_, { business }, { client }) => {
+      const currentSelectedBusinesses = client.readQuery({
         query: UPDATE_SELECTED_BUSINESSES
       })
       const data = {
         userSelectedBusinesses: [...currentSelectedBusinesses, business]
       }
 
-      cache.writeQuery({ query: UPDATE_SELECTED_BUSINESSES, data })
+      client.writeQuery({ query: UPDATE_SELECTED_BUSINESSES, data })
     }
   }
 }

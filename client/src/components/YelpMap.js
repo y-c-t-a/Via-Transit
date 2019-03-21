@@ -5,9 +5,8 @@ import ReactDOM from 'react-dom'
 import { ApolloProvider } from 'react-apollo'
 
 export default class YelpMap extends Component {
-
   onScriptLoad = () => {
-    const { returnedBusinesses } = this.props
+    const { businesses } = this.props
 
     var markerArray = []
 
@@ -16,7 +15,7 @@ export default class YelpMap extends Component {
       center: { lat: 41.8955, lng: -87.6392 }
     })
 
-    returnedBusinesses.map(business => {
+    businesses.map(business => {
       const div = document.createElement('div')
       ReactDOM.render(
         <ApolloProvider client={this.props.client}>
