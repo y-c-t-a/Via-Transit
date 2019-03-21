@@ -8,12 +8,14 @@ export const CALL_YELP = gql`
     $longitude: Float!
     $term: String
     $price: Int
+    $radius: Int
   ) {
     callYelp(
       latitude: $latitude
       longitude: $longitude
       term: $term
       price: $price
+      radius: $radius
     ) {
       businesses {
         id
@@ -31,10 +33,10 @@ export const CALL_YELP = gql`
 
 export const resolvers = {
   Query: {
-    callYelp: (_, { latitude, longitude, term, price }, { client }) => {
+    callYelp: (_, { latitude, longitude, term, price, radius }, { client }) => {
       const { data } = client.query({
         query: CALL_YELP,
-        variables: { latitude, longitude, term, price }
+        variables: { latitude, longitude, term, price, radius }
       })
       client.writeData({
         id: 'businesses',
@@ -52,7 +54,6 @@ export const resolvers = {
       const data = {
         readYelp: { ...readYelp, term },
       }
-      console.log('term data', data)
       client.writeQuery({ query: READ_YELP, data })
       return data
     },
@@ -63,20 +64,19 @@ export const resolvers = {
       const data = {
         readYelp: { ...readYelp, price }
       }
-      console.log('price data', data)
       client.writeQuery({ query: READ_YELP, data })
       return data
     },
-    updateSelectedBusinesses: (_, { business }, { client }) => {
-      console.log('hi')
-      const currentSelectedBusinesses = client.readQuery({
-        query: UPDATE_SELECTED_BUSINESSES,
+    updateRadius: (_, { radius }, { client }) => {
+      const { readYelp } = client.readQuery({
+        query: READ_YELP
       })
       const data = {
-        userSelectedBusinesses: [...currentSelectedBusinesses, business],
+        readYelp: { ...readYelp, radius }
       }
-      console.log('data', data)
-      client.writeQuery({ query: UPDATE_SELECTED_BUSINESSES, data })
+      console.log('new data to cache', data)
+      client.writeQuery({ query: READ_YELP, data })
+      return data
     },
   },
 }

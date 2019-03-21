@@ -4,6 +4,7 @@ import gql from 'graphql-tag'
 import YelpAPI from './YelpAPI'
 import YelpCategorySearch from './YelpCategorySearch'
 import YelpPrice from './YelpPrice'
+import YelpRadius from './YelpRadius'
 
 export const READ_YELP = gql`
   query {
@@ -23,14 +24,15 @@ export default class YelpMain extends React.Component {
     return (
       <div>
         <Query query={READ_YELP}>
-          {({ data, loading, error, refetch, networkStatus }) => {
+          {({ data, loading, error }) => {
             if (loading) return <h2>Loading...</h2>
             if (error) return <p>ERROR: {error.message}</p>
             return (
               <div>
-                <YelpAPI readYelp={data.readYelp} />
                 <YelpCategorySearch />
                 <YelpPrice />
+                <YelpRadius />
+                <YelpAPI readYelp={data.readYelp} />
               </div>
             )
           }}
