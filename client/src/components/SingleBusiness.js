@@ -13,24 +13,19 @@ export const UPDATE_SELECTED_BUSINESSES = gql`
 `
 
 class SingleBusiness extends React.Component {
-
   handleClick = async () => {
-    const previous = await this.props.client.query({
+    const previous = await this.props.client.readQuery({
       query: READ_ITINERARY
     })
     this.props.client.writeQuery({
       query: READ_ITINERARY,
       data: {
         userSelectedBusinesses: [
-          ...previous.data.userSelectedBusinesses,
+          ...previous.userSelectedBusinesses,
           this.props.business
         ]
       }
     })
-    // console.log(
-    //   'quiche',
-    //   this.props.client.cache.data.data.ROOT_QUERY.userSelectedBusinesses
-    // )
   }
 
   render() {

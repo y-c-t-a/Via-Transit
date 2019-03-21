@@ -27,7 +27,6 @@ export default class YelpMain extends React.Component {
             if (networkStatus === 4) return 'Refreshing!'
             if (loading) return <h2>Loading...</h2>
             if (error) return <p>ERROR: {error.message}</p>
-            console.log('data.readYelp', data.readYelp)
             return (
               <div>
                 <h2>{data.readYelp.startLat}</h2>
