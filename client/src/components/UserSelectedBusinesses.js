@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
 import { READ_ITINERARY } from './DirectionsMain'
-import { Segment, Button } from 'semantic-ui-react'
+import { Segment, Button, Icon } from 'semantic-ui-react'
 
 export default class UserSelectedBusinesses extends Component {
-  clickHandler = async event => {
+  deleteHandler = async event => {
     let name = event.target.value
     const { userSelectedBusinesses } = await this.props.client.readQuery({
       query: READ_ITINERARY,
@@ -17,6 +17,47 @@ export default class UserSelectedBusinesses extends Component {
       query: READ_ITINERARY,
       data: {
         userSelectedBusinesses: filtered,
+      },
+    })
+  }
+
+  upHandler = async event => {
+    let name = event.target.value
+    let { userSelectedBusinesses } = await this.props.client.readQuery({
+      query: READ_ITINERARY,
+    })
+    let newOrder = userSelectedBusinesses
+    for (let i = 0; i < newOrder.length; i++) {
+      if (newOrder[i].name === name) {
+        if (!newOrder[i - 1]) break
+        ;[newOrder[i], newOrder[i - 1]] = [newOrder[i - 1], newOrder[i]]
+      }
+    }
+    await this.props.client.writeQuery({
+      query: READ_ITINERARY,
+      data: {
+        userSelectedBusinesses: newOrder,
+      },
+    })
+  }
+
+  downHandler = async (event, data) => {
+    let name = data.value
+    let { userSelectedBusinesses } = await this.props.client.readQuery({
+      query: READ_ITINERARY,
+    })
+    let newOrder = userSelectedBusinesses
+    for (let i = 0; i < newOrder.length; i++) {
+      if (newOrder[i].name === name) {
+        if (!newOrder[i + 1]) break
+        ;[newOrder[i + 1], newOrder[i]] = [newOrder[i], newOrder[i + 1]]
+        break
+      }
+    }
+    await this.props.client.writeQuery({
+      query: READ_ITINERARY,
+      data: {
+        userSelectedBusinesses: newOrder,
       },
     })
   }
@@ -37,26 +78,26 @@ export default class UserSelectedBusinesses extends Component {
                     <Button.Group floated="right">
                       <Button.Group>
                         <Button
-                          content="^"
-                          key={business.name}
+                          icon
                           value={business.name}
                           size="mini"
-                          // onClick={this.clickHandler}
+                          content="^"
+                          onClick={this.upHandler}
                         />
                         <Button
+                          icon
                           content="v"
-                          key={business.name}
+                          onClick={this.downHandler}
                           value={business.name}
                           size="mini"
-                          // onClick={this.clickHandler}
                         />
                       </Button.Group>
                       <Button
-                        key={business.name}
+                        icon
                         value={business.name}
-                        color="red"
                         size="mini"
-                        onClick={this.clickHandler}
+                        color="red"
+                        onClick={this.deleteHandler}
                         content="x"
                       />
                     </Button.Group>

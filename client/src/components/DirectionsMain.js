@@ -27,7 +27,6 @@ export default class DirectionsMain extends React.Component {
           {({ data, loading, error, client }) => {
             if (loading) return <h2>Loading...</h2>
             if (error) return <p>ERROR: {error.message}</p>
-            console.log('data', data.userSelectedBusinesses)
             return (
               <div style={{ display: 'inline-block' }}>
                 <div style={{ float: 'left' }}>
