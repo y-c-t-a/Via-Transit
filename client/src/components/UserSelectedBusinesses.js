@@ -34,14 +34,32 @@ export default class UserSelectedBusinesses extends Component {
                 {data.userSelectedBusinesses.map(business => (
                   <Segment key={business.name}>
                     {business.name}
-                    <Button
-                      key={business.name}
-                      value={business.name}
-                      color="red"
-                      size="mini"
-                      onClick={this.clickHandler}
-                      content="x"
-                    />
+                    <Button.Group floated="right">
+                      <Button.Group>
+                        <Button
+                          content="^"
+                          key={business.name}
+                          value={business.name}
+                          size="mini"
+                          // onClick={this.clickHandler}
+                        />
+                        <Button
+                          content="v"
+                          key={business.name}
+                          value={business.name}
+                          size="mini"
+                          // onClick={this.clickHandler}
+                        />
+                      </Button.Group>
+                      <Button
+                        key={business.name}
+                        value={business.name}
+                        color="red"
+                        size="mini"
+                        onClick={this.clickHandler}
+                        content="x"
+                      />
+                    </Button.Group>
                   </Segment>
                 ))}
               </Segment.Group>
