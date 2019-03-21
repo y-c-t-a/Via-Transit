@@ -7,6 +7,7 @@ const typeDefs = gql`
       longitude: Float!
       term: String
       price: Int
+      radius: Int
     ): Businesses
     getDirections(
       originLatitude: Float!
