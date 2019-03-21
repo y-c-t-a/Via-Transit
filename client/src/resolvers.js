@@ -54,6 +54,7 @@ export const resolvers = {
         readYelp: { ...readYelp, term }
       }
       client.writeQuery({ query: READ_YELP, data })
+      console.log('term??', client.cache)
       return data
     },
     updateSelectedBusinesses: (_, { business }, { client }) => {
