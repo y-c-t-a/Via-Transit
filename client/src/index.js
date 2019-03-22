@@ -21,7 +21,7 @@ cache.writeData({
       term: 'Coffee',
       radius: 3,
       rating: 4.8,
-      price: 1
+      price: 4
     },
     userSelectedBusinesses: [
       {
@@ -33,8 +33,8 @@ cache.writeData({
         coordinates: {
           __typename: 'Coordinates',
           latitude: 41.8938478,
-          longitude: -87.6361254,
-        },
+          longitude: -87.6361254
+        }
       },
       {
         __typename: 'Business',
@@ -45,8 +45,8 @@ cache.writeData({
         coordinates: {
           __typename: 'Coordinates',
           latitude: 41.9082438,
-          longitude: -87.6492494,
-        },
+          longitude: -87.6492494
+        }
       },
       {
         __typename: 'Business',
@@ -57,32 +57,32 @@ cache.writeData({
         coordinates: {
           __typename: 'Coordinates',
           latitude: 41.9413393,
-          longitude: -87.655412,
-        },
-      },
-    ],
-    businesses: [
-      {
-        __typename: 'Business',
-      },
-    ],
-  },
+          longitude: -87.655412
+        }
+      }
+    ]
+    // businesses: [
+    //   {
+    //     __typename: 'Business'
+    //   }
+    // ]
+  }
 })
 
 const client = new ApolloClient({
   connectToDevTools: true,
   link: new HttpLink({
-    uri: 'http://localhost:4000/graphql',
+    uri: 'http://localhost:4000/graphql'
   }),
   resolvers,
-  cache,
+  cache
 })
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    {/* <UserSelectedBusinesses /> */}
-    {/* <YelpCategorySearch /> */}
+    <h3>Businesses Recommended by Yelp</h3>
     <YelpMain />
+    <h3>Travel by CTA!</h3>
     <DirectionsMain />
   </ApolloProvider>,
   document.getElementById('root')

@@ -5,8 +5,9 @@ import ReactDOM from 'react-dom'
 import { ApolloProvider } from 'react-apollo'
 
 export default class YelpMap extends Component {
-  onScriptLoad = () => {
-    const { businesses } = this.props
+  onScriptLoad = props => {
+    if (!props) props = this.props
+    const { businesses } = props
 
     var markerArray = []
 
@@ -18,7 +19,7 @@ export default class YelpMap extends Component {
     businesses.map(business => {
       const div = document.createElement('div')
       ReactDOM.render(
-        <ApolloProvider client={this.props.client}>
+        <ApolloProvider client={props.client}>
           <SingleBusiness business={business} />
         </ApolloProvider>,
         div
@@ -57,6 +58,13 @@ export default class YelpMap extends Component {
     } else {
       this.onScriptLoad()
     }
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.props !== nextProps) {
+      this.onScriptLoad(nextProps)
+      return true
+    } else return false
   }
 
   render() {
