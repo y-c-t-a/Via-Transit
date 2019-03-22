@@ -17,15 +17,15 @@ export default class UserSelectedBusinesses extends Component {
         'purple',
         'teal',
         'pink',
-        'olive',
-      ],
+        'olive'
+      ]
     }
   }
 
-  deleteHandler = async event => {
-    let name = event.target.value
+  deleteHandler = async (event, data) => {
+    let name = data.value
     const { userSelectedBusinesses } = await this.props.client.readQuery({
-      query: READ_ITINERARY,
+      query: READ_ITINERARY
     })
     const filtered = userSelectedBusinesses.filter(business => {
       return business.name !== name
@@ -33,15 +33,15 @@ export default class UserSelectedBusinesses extends Component {
     await this.props.client.writeQuery({
       query: READ_ITINERARY,
       data: {
-        userSelectedBusinesses: filtered,
-      },
+        userSelectedBusinesses: filtered
+      }
     })
   }
 
-  upHandler = async event => {
-    let name = event.target.value
+  upHandler = async (event, data) => {
+    let name = data.value
     let { userSelectedBusinesses } = await this.props.client.readQuery({
-      query: READ_ITINERARY,
+      query: READ_ITINERARY
     })
     let newOrder = userSelectedBusinesses
     for (let i = 0; i < newOrder.length; i++) {
@@ -53,15 +53,15 @@ export default class UserSelectedBusinesses extends Component {
     await this.props.client.writeQuery({
       query: READ_ITINERARY,
       data: {
-        userSelectedBusinesses: newOrder,
-      },
+        userSelectedBusinesses: newOrder
+      }
     })
   }
 
   downHandler = async (event, data) => {
     let name = data.value
     let { userSelectedBusinesses } = await this.props.client.readQuery({
-      query: READ_ITINERARY,
+      query: READ_ITINERARY
     })
     let newOrder = userSelectedBusinesses
     for (let i = 0; i < newOrder.length; i++) {
@@ -74,8 +74,8 @@ export default class UserSelectedBusinesses extends Component {
     await this.props.client.writeQuery({
       query: READ_ITINERARY,
       data: {
-        userSelectedBusinesses: newOrder,
-      },
+        userSelectedBusinesses: newOrder
+      }
     })
   }
 
@@ -98,16 +98,22 @@ export default class UserSelectedBusinesses extends Component {
                           icon
                           value={business.name}
                           size="mini"
-                          content="^"
                           onClick={this.upHandler}
-                        />
+                        >
+                          <Icon name="chevron up" onClick={this.upHandler} />
+                        </Button>
                         <Button
                           icon
                           content="v"
                           onClick={this.downHandler}
                           value={business.name}
                           size="mini"
-                        />
+                        >
+                          <Icon
+                            name="chevron down"
+                            onClick={this.downHandler}
+                          />
+                        </Button>
                       </Button.Group>
                       <Button
                         icon
@@ -115,8 +121,9 @@ export default class UserSelectedBusinesses extends Component {
                         size="mini"
                         color="red"
                         onClick={this.deleteHandler}
-                        content="x"
-                      />
+                      >
+                        <Icon name="delete" onClick={this.deleteHandler} />
+                      </Button>
                     </Button.Group>
                   </Segment>
                 ))}
