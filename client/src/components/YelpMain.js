@@ -28,11 +28,15 @@ export default class YelpMain extends React.Component {
             if (loading) return <h2>Loading...</h2>
             if (error) return <p>ERROR: {error.message}</p>
             return (
-              <div>
-                <YelpCategorySearch />
-                <YelpPrice />
-                <YelpRadius />
-                <YelpAPI readYelp={data.readYelp} />
+              <div style={{ display: 'inline-block' }}>
+                <div style={{ float: 'right' }}>
+                  <YelpCategorySearch />
+                  <YelpPrice />
+                  <YelpRadius />
+                </div>
+                <div style={{ float: 'left' }}>
+                  <YelpAPI readYelp={data.readYelp} />
+                </div>
               </div>
             )
           }}
