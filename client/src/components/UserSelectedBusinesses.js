@@ -5,6 +5,23 @@ import { READ_ITINERARY } from './DirectionsMain'
 import { Segment, Button, Icon } from 'semantic-ui-react'
 
 export default class UserSelectedBusinesses extends Component {
+  constructor() {
+    super()
+    this.state = {
+      colors: [
+        '',
+        'blue',
+        'red',
+        'green',
+        'yellow',
+        'purple',
+        'teal',
+        'pink',
+        'olive',
+      ],
+    }
+  }
+
   deleteHandler = async event => {
     let name = event.target.value
     const { userSelectedBusinesses } = await this.props.client.readQuery({
@@ -72,8 +89,8 @@ export default class UserSelectedBusinesses extends Component {
             <Segment.Group>
               <Segment>Itinerary</Segment>
               <Segment.Group raised>
-                {data.userSelectedBusinesses.map(business => (
-                  <Segment key={business.name}>
+                {data.userSelectedBusinesses.map((business, index) => (
+                  <Segment key={business.name} color={this.state.colors[index]}>
                     {business.name}
                     <Button.Group floated="right">
                       <Button.Group>

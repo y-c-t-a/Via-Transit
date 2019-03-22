@@ -17,10 +17,31 @@ export default class DirectionsMap extends Component {
     )
 
     for (let i = 0; i < userSelectedBusinesses.length - 1; i++) {
+      let colors = [
+        'blue',
+        'red',
+        'green',
+        'yellow',
+        'purple',
+        'teal',
+        'pink',
+        'olive',
+      ]
+      // let strokes = [5, 4.5, 4, 3.5, 3, 2.5, 2, 1.5, 1, 0.05]
+      let color = colors[i]
+      if (!color) color = colors[0]
+      // let color = '#' + Math.floor(Math.random() * 16777215).toString(16)
       var markerArray = []
       var directionsService = new window.google.maps.DirectionsService()
       var directionsRenderer = new window.google.maps.DirectionsRenderer({
         map: map,
+        markerOptions: {
+          visible: false,
+        },
+        polylineOptions: {
+          strokeColor: color,
+          // strokeWeight: stoke,
+        },
       })
       var stepDisplay = new window.google.maps.InfoWindow()
 
@@ -59,7 +80,7 @@ export default class DirectionsMap extends Component {
           function(response, status) {
             if (status === 'OK') {
               directionsRenderer.setDirections(response)
-              showSteps(response, markerArray, stepDisplay, map)
+              // showSteps(response, markerArray, stepDisplay, map)
             } else {
               window.alert('Directions request failed due to ' + status)
             }
