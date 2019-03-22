@@ -11,10 +11,15 @@ export default class YelpMap extends Component {
 
     var markerArray = []
 
-    var map = new window.google.maps.Map(document.getElementById('yelpMap'), {
-      zoom: 13,
-      center: { lat: 41.8955, lng: -87.6392 }
-    })
+    if (!this.map) {
+      this.map = new window.google.maps.Map(
+        document.getElementById('yelpMap'),
+        {
+          zoom: 13,
+          center: { lat: 41.8955, lng: -87.6392 },
+        }
+      )
+    }
 
     businesses.map(business => {
       const div = document.createElement('div')
@@ -25,21 +30,21 @@ export default class YelpMap extends Component {
         div
       )
       var infowindow = new window.google.maps.InfoWindow({
-        content: div
+        content: div,
       })
       var marker = new window.google.maps.Marker({
         position: {
           lat: business.coordinates.latitude,
-          lng: business.coordinates.longitude
+          lng: business.coordinates.longitude,
         },
-        map: map,
-        title: 'Yelp Attractions Result'
+        map: this.map,
+        title: 'Yelp Attractions Result',
       })
 
       marker.addListener('click', function() {
-        infowindow.open(map, marker)
+        infowindow.open(this.map, marker)
       })
-      marker.setMap(map)
+      marker.setMap(this.map)
     })
   }
 
@@ -60,11 +65,32 @@ export default class YelpMap extends Component {
     }
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    if (this.props !== nextProps) {
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   if (this.props !== nextProps) {
+  //     this.onScriptLoad(nextProps)
+  //     return true
+  //   } else return false
+  // }
+
+  componentWillReceiveProps(nextProps) {
+    if (!window.google) {
+      var s = document.createElement('script')
+      s.type = 'text/javascript'
+      s.src = `https://maps.google.com/maps/api/js?key=${GOOGLE_API_KEY}`
+      var x = document.getElementsByTagName('script')[0]
+      x.parentNode.insertBefore(s, x)
+      // Below is important.
+      //We cannot access google.maps until it's finished loading
+      s.addEventListener('load', e => {
+        this.onScriptLoad(nextProps)
+      })
+    } else {
       this.onScriptLoad(nextProps)
-      return true
-    } else return false
+    }
+  }
+
+  shouldComponentUpdate() {
+    return false
   }
 
   render() {

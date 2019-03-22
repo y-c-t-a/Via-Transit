@@ -44,15 +44,13 @@ export default function YelpAPI(props) {
         variables={{ latitude, longitude, term, price, radius }}
       >
         {({ data, loading, error, client }) => {
-          if (loading) return <h2>Loading...</h2>
-          if (error) return <p>ERROR: {error.message}</p>
-          console.log('YelpAPI rerender')
-
+          // if (loading) return <h2>Loading...</h2>
+          // if (error) return <p>ERROR: {error.message}</p>
           return (
             <div>
               <YelpMap
                 id="yelpMap"
-                businesses={data.callYelp.businesses}
+                businesses={data.callYelp ? data.callYelp.businesses : []}
                 client={client}
               />
             </div>
