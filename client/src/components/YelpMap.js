@@ -12,6 +12,7 @@ export default class YelpMap extends Component {
     }
   }
   onScriptLoad = props => {
+    debugger
     if (!props) props = this.props
     const { businesses } = props
 
@@ -28,9 +29,9 @@ export default class YelpMap extends Component {
     }
 
     if (this.state.currentMarkers.length) {
-      this.state.currentMarkers.forEach(currentMarker =>
+      this.state.currentMarkers.forEach(currentMarker => {
         currentMarker.setMap(null)
-      )
+      })
     }
 
     businesses.forEach(business => {
