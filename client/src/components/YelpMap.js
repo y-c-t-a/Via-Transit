@@ -5,6 +5,12 @@ import ReactDOM from 'react-dom'
 import { ApolloProvider } from 'react-apollo'
 
 export default class YelpMap extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      currentMarkers: []
+    }
+  }
   onScriptLoad = props => {
     if (!props) props = this.props
     const { businesses } = props
@@ -16,12 +22,18 @@ export default class YelpMap extends Component {
         document.getElementById('yelpMap'),
         {
           zoom: 13,
-          center: { lat: 41.8955, lng: -87.6392 },
+          center: { lat: 41.8955, lng: -87.6392 }
         }
       )
     }
 
-    businesses.map(business => {
+    if (this.state.currentMarkers.length) {
+      this.state.currentMarkers.forEach(currentMarker =>
+        currentMarker.setMap(null)
+      )
+    }
+
+    businesses.forEach(business => {
       const div = document.createElement('div')
       ReactDOM.render(
         <ApolloProvider client={props.client}>
@@ -30,22 +42,25 @@ export default class YelpMap extends Component {
         div
       )
       var infowindow = new window.google.maps.InfoWindow({
-        content: div,
+        content: div
       })
       var marker = new window.google.maps.Marker({
         position: {
           lat: business.coordinates.latitude,
-          lng: business.coordinates.longitude,
+          lng: business.coordinates.longitude
         },
-        map: this.map,
-        title: 'Yelp Attractions Result',
+        title: business.name
       })
 
       marker.addListener('click', function() {
         infowindow.open(this.map, marker)
       })
-      marker.setMap(this.map)
+      markerArray.push(marker)
     })
+
+    this.setState({ currentMarkers: markerArray })
+
+    markerArray.forEach(marker => marker.setMap(this.map))
   }
 
   componentDidMount() {
