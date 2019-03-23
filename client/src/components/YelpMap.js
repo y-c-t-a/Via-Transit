@@ -12,7 +12,6 @@ export default class YelpMap extends Component {
     }
   }
   onScriptLoad = props => {
-    debugger
     if (!props) props = this.props
     const { businesses } = props
 
@@ -59,9 +58,9 @@ export default class YelpMap extends Component {
       markerArray.push(marker)
     })
 
-    this.setState({ currentMarkers: markerArray })
-
     markerArray.forEach(marker => marker.setMap(this.map))
+
+    this.setState({ currentMarkers: markerArray })
   }
 
   componentDidMount() {
@@ -80,13 +79,6 @@ export default class YelpMap extends Component {
       this.onScriptLoad()
     }
   }
-
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   if (this.props !== nextProps) {
-  //     this.onScriptLoad(nextProps)
-  //     return true
-  //   } else return false
-  // }
 
   componentWillReceiveProps(nextProps) {
     if (!window.google) {
@@ -110,6 +102,7 @@ export default class YelpMap extends Component {
   }
 
   render() {
+    // console.log('re-rendering YelpMap')
     return <div style={{ width: 500, height: 500 }} id={this.props.id} />
   }
 }

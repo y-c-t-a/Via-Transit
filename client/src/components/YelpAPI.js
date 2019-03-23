@@ -46,6 +46,7 @@ export default function YelpAPI(props) {
         {({ data, loading, error, client }) => {
           // if (loading) return <h2>Loading...</h2>
           // if (error) return <p>ERROR: {error.message}</p>
+          // console.log('re-rendering YelpAPI')
           return (
             <div>
               <YelpMap
