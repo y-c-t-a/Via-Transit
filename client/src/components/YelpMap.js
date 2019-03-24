@@ -45,6 +45,7 @@ export default class YelpMap extends Component {
         content: div
       })
       var marker = new window.google.maps.Marker({
+        map: this.map,
         position: {
           lat: business.coordinates.latitude,
           lng: business.coordinates.longitude
@@ -57,8 +58,6 @@ export default class YelpMap extends Component {
       })
       markerArray.push(marker)
     })
-
-    markerArray.forEach(marker => marker.setMap(this.map))
 
     this.setState({ currentMarkers: markerArray })
   }
@@ -88,7 +87,7 @@ export default class YelpMap extends Component {
       s.addEventListener('load', e => {
         this.onScriptLoad(nextProps)
       })
-    } else {
+    } else if (nextProps.businesses !== this.props.businesses) {
       this.onScriptLoad(nextProps)
     }
   }
@@ -98,7 +97,6 @@ export default class YelpMap extends Component {
   }
 
   render() {
-    // console.log('re-rendering YelpMap')
     return <div style={{ width: 500, height: 500 }} id={this.props.id} />
   }
 }
