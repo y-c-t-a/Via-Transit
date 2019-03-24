@@ -1,6 +1,6 @@
 import React from 'react'
 import { Query } from 'react-apollo'
-// import YelpMap from './YelpMap'
+import YelpMap from './YelpMap'
 import gql from 'graphql-tag'
 // import { CALL_YELP } from '../resolvers'
 
@@ -48,11 +48,11 @@ export default function YelpAPI(props) {
           // if (error) return <p>ERROR: {error.message}</p>
           return (
             <div>
-              {/* <YelpMap
+              <YelpMap
                 id="yelpMap"
                 businesses={data.callYelp ? data.callYelp.businesses : []}
                 client={client}
-              /> */}
+              />
             </div>
           )
         }}
