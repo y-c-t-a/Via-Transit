@@ -1,8 +1,8 @@
-import React from 'react';
-import { Mutation } from 'react-apollo';
-import gql from 'graphql-tag';
-import { Slider } from 'react-semantic-ui-range';
-import { Grid, Label } from 'semantic-ui-react';
+import React from 'react'
+import { Mutation } from 'react-apollo'
+import gql from 'graphql-tag'
+import { Slider } from 'react-semantic-ui-range'
+import { Label } from 'semantic-ui-react'
 
 export const UPDATE_RADIUS = gql`
   mutation updateRadius($radius: Int!) {
@@ -10,24 +10,23 @@ export const UPDATE_RADIUS = gql`
       radius
     }
   }
-`;
+`
 
 export default class YelpRadius extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
-      radius: 3,
-    };
+      radius: 3
+    }
   }
 
   handleValueChange = (e, { value }) => {
-    e.preventDefault();
+    e.preventDefault()
     this.setState({
-      radius: value,
-    });
-  };
+      radius: value
+    })
+  }
   render() {
-
     return (
       <Mutation mutation={UPDATE_RADIUS}>
         {mutate => (
@@ -41,7 +40,7 @@ export default class YelpRadius extends React.Component {
                 step: 1,
                 onChange: value => {
                   this.setState({ radius: value })
-                  return mutate({ variables: { radius: value}})
+                  return mutate({ variables: { radius: value } })
                 }
               }}
             />
@@ -49,6 +48,6 @@ export default class YelpRadius extends React.Component {
           </div>
         )}
       </Mutation>
-    );
+    )
   }
 }

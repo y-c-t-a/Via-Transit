@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
 import { READ_ITINERARY } from './DirectionsMain'
 import { Segment, Button, Icon } from 'semantic-ui-react'
@@ -9,7 +8,7 @@ export default class UserSelectedBusinesses extends Component {
     super()
     this.state = {
       colors: [
-        '',
+        'grey',
         'blue',
         'red',
         'green',
@@ -104,7 +103,6 @@ export default class UserSelectedBusinesses extends Component {
                         </Button>
                         <Button
                           icon
-                          content="v"
                           onClick={this.downHandler}
                           value={business.name}
                           size="mini"
