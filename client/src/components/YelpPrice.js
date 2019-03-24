@@ -16,16 +16,16 @@ export default function YelpPrice() {
     <Mutation mutation={UPDATE_PRICE}>
       {updatePrice => (
         <Button.Group size="mini">
-          <Button onClick={() => updatePrice({ variables: { price: 1 } })}>
+          <Button onClick={() => updatePrice({ variables: { price: '1' } })}>
             $
           </Button>
-          <Button onClick={() => updatePrice({ variables: { price: 2 } })}>
+          <Button onClick={() => updatePrice({ variables: { price: '1, 2' } })}>
             $$
           </Button>
-          <Button onClick={() => updatePrice({ variables: { price: 3 } })}>
+          <Button onClick={() => updatePrice({ variables: { price: '2, 3' } })}>
             $$$
           </Button>
-          <Button onClick={() => updatePrice({ variables: { price: 4 } })}>
+          <Button onClick={() => updatePrice({ variables: { price: '3, 4' } })}>
             $$$$
           </Button>
         </Button.Group>
