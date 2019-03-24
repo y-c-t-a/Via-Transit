@@ -1,5 +1,4 @@
 import gql from 'graphql-tag'
-import UPDATE_SELECTED_BUSINESSES from './components/SingleBusiness'
 import { READ_YELP } from './components/YelpMain'
 
 // export const CALL_YELP = gql`

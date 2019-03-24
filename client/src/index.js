@@ -4,17 +4,17 @@ import { ApolloClient } from 'apollo-client'
 import { HttpLink } from 'apollo-link-http'
 import { ApolloProvider } from 'react-apollo'
 import { InMemoryCache } from 'apollo-cache-inmemory'
-import { persistCache } from 'apollo-cache-persist'
+// import { persistCache } from 'apollo-cache-persist'
 import DirectionsMain from './components/DirectionsMain'
 import { resolvers } from './resolvers'
 import YelpMain from './components/YelpMain'
 
 const cache = new InMemoryCache()
 
-persistCache({
-  cache,
-  storage: window.localStorage
-})
+// persistCache({
+//   cache,
+//   storage: window.localStorage
+// })
 
 cache.writeData({
   data: {
@@ -36,25 +36,37 @@ cache.writeData({
         rating: 4,
         coordinates: {
           __typename: 'Coordinates',
-          latitude: 41.8938478,
-          longitude: -87.6361254
+          latitude: 41.8921475,
+          longitude: -87.6191869
         }
       },
       {
         __typename: 'Business',
         id: 2,
-        price: '$$$',
-        name: 'REI',
+        price: '$',
+        name: 'Kung Fu Tea',
         rating: 3,
         coordinates: {
           __typename: 'Coordinates',
-          latitude: 41.9082438,
-          longitude: -87.6492494
+          latitude: 41.8542969,
+          longitude: -87.6350943
         }
       },
       {
         __typename: 'Business',
         id: 3,
+        price: '$$',
+        name: 'United Center',
+        rating: 2.5,
+        coordinates: {
+          __typename: 'Coordinates',
+          latitude: 41.8806908,
+          longitude: -87.6763646
+        }
+      },
+      {
+        __typename: 'Business',
+        id: 4,
         price: '$$',
         name: 'Wrigley Field',
         rating: 2.5,
@@ -65,11 +77,6 @@ cache.writeData({
         }
       }
     ]
-    // businesses: [
-    //   {
-    //     __typename: 'Business'
-    //   }
-    // ]
   }
 })
 
