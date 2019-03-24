@@ -24,8 +24,8 @@ cache.writeData({
       startLng: -87.6393,
       term: 'Coffee',
       radius: 3,
-      rating: 4.8,
-      price: 4
+      price: '1'
+      // sort_by: 'rating'
     },
     userSelectedBusinesses: [
       {

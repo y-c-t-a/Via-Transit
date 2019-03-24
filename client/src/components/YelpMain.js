@@ -13,7 +13,6 @@ export const READ_YELP = gql`
       startLng
       term
       radius
-      rating
       price
     }
   }

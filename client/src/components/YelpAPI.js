@@ -9,7 +9,7 @@ export const CALL_YELP = gql`
     $latitude: Float!
     $longitude: Float!
     $term: String
-    $price: Int
+    $price: String
     $radius: Int
   ) {
     callYelp(

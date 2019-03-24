@@ -6,7 +6,7 @@ const typeDefs = gql`
       latitude: Float!
       longitude: Float!
       term: String
-      price: Int
+      price: String
       radius: Int
     ): Businesses
     getDirections(
@@ -16,6 +16,10 @@ const typeDefs = gql`
       destinationLongitude: Float!
     ): Routes
   }
+
+  # type Price {
+  #   prices: [Int]
+  # }
 
   type Businesses {
     businesses: [Business]
