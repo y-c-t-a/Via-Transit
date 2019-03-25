@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import React, { Component } from 'react'
 import { GOOGLE_API_KEY } from '../secrets'
 import SingleBusiness from './SingleBusiness'
@@ -13,7 +14,15 @@ export default class YelpMap extends Component {
   }
   onScriptLoad = props => {
     if (!props) props = this.props
+    console.log('yelp map props', props)
     const { businesses } = props
+    let { radius } = props
+    console.log('radius', radius)
+    const { latitude, longitude } = props.userSelectedBusinesses[
+      props.userSelectedBusinesses.length - 1
+    ].coordinates
+
+    let zoomVar
 
     var markerArray = []
 
@@ -21,11 +30,17 @@ export default class YelpMap extends Component {
       this.map = new window.google.maps.Map(
         document.getElementById('yelpMap'),
         {
-          zoom: 13,
-          center: { lat: 41.8955, lng: -87.6392 }
+          zoom: 12,
+          center: { lat: latitude, lng: longitude }
         }
       )
     }
+
+    if (radius === 1) this.map.setZoom(13.5)
+    else if (radius === 2) this.map.setZoom(12.3)
+    else if (radius === 3) this.map.setZoom(12)
+    else if (radius > 3) this.map.setZoom(11.5)
+    else if (radius > 6) this.map.setZoom(10.5)
 
     if (this.state.currentMarkers.length) {
       this.state.currentMarkers.forEach(currentMarker => {

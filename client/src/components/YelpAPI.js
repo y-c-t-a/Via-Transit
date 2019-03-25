@@ -61,6 +61,8 @@ export default class YelpAPI extends React.Component {
                   id="yelpMap"
                   businesses={data.callYelp ? data.callYelp.businesses : []}
                   client={client}
+                  userSelectedBusinesses={this.props.readItinerary}
+                  radius={radius}
                 />
               </div>
             )
