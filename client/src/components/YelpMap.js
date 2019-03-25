@@ -56,7 +56,8 @@ export default class YelpMap extends Component {
 
     if (this.state.currentMarkers.length) {
       this.state.currentMarkers.forEach(currentMarker => {
-        currentMarker.setMap(null)
+        currentMarker.marker.setMap(null)
+        ReactDOM.unmountComponentAtNode(currentMarker.div)
       })
     }
 
@@ -83,7 +84,7 @@ export default class YelpMap extends Component {
       marker.addListener('click', function() {
         infowindow.open(this.map, marker)
       })
-      markerArray.push(marker)
+      markerArray.push({marker, div})
     })
 
     this.setState({ currentMarkers: markerArray })

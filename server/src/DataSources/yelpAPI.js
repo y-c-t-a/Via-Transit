@@ -16,10 +16,10 @@ class YelpAPI extends RESTDataSource {
       method: 'get',
       url: `${
         this.businessBaseURL
-      }term=${term}&latitude=${latitude}&longitude=${longitude}&price=${price}&radius=${newRadius}&sort_by=rating&limit`,
+      }term=${term}&latitude=${latitude}&longitude=${longitude}&price=${price}&radius=${newRadius}&sort_by=best_match`,
       headers: {
-        Authorization: `Bearer ${process.env.YELP_API_KEY}`
-      }
+        Authorization: `Bearer ${process.env.YELP_API_KEY}`,
+      },
     })
     return response.data
   }

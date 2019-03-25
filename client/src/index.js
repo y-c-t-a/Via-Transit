@@ -27,11 +27,19 @@ cache.writeData({
   data: {
     readYelp: {
       __typename: 'readYelp',
+<<<<<<< HEAD
       startLat: 41.8838,
       startLng: -87.625,
       term: 'Coffee',
       radius: 5,
       price: '1'
+=======
+      startLat: 41.8956,
+      startLng: -87.6393,
+      term: 'Boat Tours',
+      radius: 3,
+      price: '1',
+>>>>>>> 88ec8aecc6e3db767bef4a3f02e8150ba9320761
     },
     userSelectedBusinesses: [
       {
@@ -97,6 +105,7 @@ const client = new ApolloClient({
 
 ReactDOM.render(
   <ApolloProvider client={client}>
+    {/* <h3>Businesses Recommended by Yelp</h3> */}
     <Router>
       <div>
         <Menu>
@@ -115,6 +124,7 @@ ReactDOM.render(
         </Menu>
         <Route exact path="/" render={() => <Redirect to="/search" />} />
         <Route exact path="/search" component={YelpMain} />
+        {/* <h3>Travel by CTA!</h3> */}
         <Route exact path="/itinerary" component={DirectionsMain} />
       </div>
     </Router>
