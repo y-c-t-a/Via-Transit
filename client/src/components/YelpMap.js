@@ -12,17 +12,29 @@ export default class YelpMap extends Component {
       currentMarkers: []
     }
   }
+  // eslint-disable-next-line max-statements
   onScriptLoad = props => {
     if (!props) props = this.props
-    console.log('yelp map props', props)
     const { businesses } = props
-    let { radius } = props
-    console.log('radius', radius)
     const { latitude, longitude } = props.userSelectedBusinesses[
       props.userSelectedBusinesses.length - 1
     ].coordinates
 
-    let zoomVar
+    const latArr = []
+    const longArr = []
+
+    businesses.forEach(business => {
+      latArr.push(business.coordinates.latitude)
+      longArr.push(business.coordinates.longitude)
+    })
+
+    const northMost = Math.max(...latArr)
+    const southMost = Math.min(...latArr)
+    const eastMost = Math.max(...longArr)
+    const westMost = Math.min(...longArr)
+
+    const SW = new window.google.maps.LatLng({ lat: southMost, lng: westMost })
+    const NE = new window.google.maps.LatLng({ lat: northMost, lng: eastMost })
 
     var markerArray = []
 
@@ -36,11 +48,11 @@ export default class YelpMap extends Component {
       )
     }
 
-    if (radius === 1) this.map.setZoom(13.5)
-    else if (radius === 2) this.map.setZoom(12.3)
-    else if (radius === 3) this.map.setZoom(12)
-    else if (radius > 3) this.map.setZoom(11.5)
-    else if (radius > 6) this.map.setZoom(10.5)
+    const bounds = new window.google.maps.LatLngBounds()
+    bounds.extend(SW)
+    bounds.extend(NE)
+
+    this.map.fitBounds(bounds)
 
     if (this.state.currentMarkers.length) {
       this.state.currentMarkers.forEach(currentMarker => {
