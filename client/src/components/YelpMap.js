@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import React, { Component } from 'react'
 import { GOOGLE_API_KEY } from '../secrets'
 import SingleBusiness from './SingleBusiness'
@@ -11,9 +12,29 @@ export default class YelpMap extends Component {
       currentMarkers: []
     }
   }
+  // eslint-disable-next-line max-statements
   onScriptLoad = props => {
     if (!props) props = this.props
     const { businesses } = props
+    const { latitude, longitude } = props.userSelectedBusinesses[
+      props.userSelectedBusinesses.length - 1
+    ].coordinates
+
+    const latArr = []
+    const longArr = []
+
+    businesses.forEach(business => {
+      latArr.push(business.coordinates.latitude)
+      longArr.push(business.coordinates.longitude)
+    })
+
+    const northMost = Math.max(...latArr)
+    const southMost = Math.min(...latArr)
+    const eastMost = Math.max(...longArr)
+    const westMost = Math.min(...longArr)
+
+    const SW = new window.google.maps.LatLng({ lat: southMost, lng: westMost })
+    const NE = new window.google.maps.LatLng({ lat: northMost, lng: eastMost })
 
     var markerArray = []
 
@@ -21,11 +42,17 @@ export default class YelpMap extends Component {
       this.map = new window.google.maps.Map(
         document.getElementById('yelpMap'),
         {
-          zoom: 13,
-          center: { lat: 41.8955, lng: -87.6392 }
+          zoom: 12,
+          center: { lat: latitude, lng: longitude }
         }
       )
     }
+
+    const bounds = new window.google.maps.LatLngBounds()
+    bounds.extend(SW)
+    bounds.extend(NE)
+
+    this.map.fitBounds(bounds)
 
     if (this.state.currentMarkers.length) {
       this.state.currentMarkers.forEach(currentMarker => {
