@@ -2,7 +2,6 @@
 /* eslint-disable no-shadow */
 import React, { Component } from 'react'
 import { GOOGLE_API_KEY } from '../secrets'
-import ReactDOM from 'react-dom'
 
 export default class DirectionsMap extends Component {
   constructor(props) {

@@ -5,6 +5,7 @@ import YelpAPI from './YelpAPI'
 import YelpCategorySearch from './YelpCategorySearch'
 import YelpPrice from './YelpPrice'
 import YelpRadius from './YelpRadius'
+import UserSelectedBusinesses from './UserSelectedBusinesses'
 
 export const READ_YELP = gql`
   query {
@@ -23,7 +24,7 @@ export default class YelpMain extends React.Component {
     return (
       <div>
         <Query query={READ_YELP}>
-          {({ data, loading, error }) => {
+          {({ data, loading, error, client }) => {
             if (loading) return <h2>Loading...</h2>
             if (error) return <p>ERROR: {error.message}</p>
             return (
@@ -32,6 +33,7 @@ export default class YelpMain extends React.Component {
                   <YelpCategorySearch />
                   <YelpPrice />
                   <YelpRadius />
+                  <UserSelectedBusinesses client={client}/>
                 </div>
                 <div style={{ float: 'left' }}>
                   <YelpAPI readYelp={data.readYelp} />
