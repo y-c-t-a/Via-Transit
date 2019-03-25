@@ -44,7 +44,6 @@ export const resolvers = {
       const data = {
         readYelp: { ...readYelp, radius }
       }
-      console.log('new data to cache', data)
       client.writeQuery({ query: READ_YELP, data })
       return data
     }

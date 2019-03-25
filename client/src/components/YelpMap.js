@@ -88,7 +88,6 @@ export default class YelpMap extends Component {
         this.onScriptLoad(nextProps)
       })
     } else if (nextProps.businesses !== this.props.businesses) {
-      console.log('next props', nextProps)
       this.onScriptLoad(nextProps)
     }
   }

@@ -97,7 +97,6 @@ const client = new ApolloClient({
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    {/* <h3>Businesses Recommended by Yelp</h3> */}
     <Router>
       <div>
         <Menu>
@@ -116,7 +115,6 @@ ReactDOM.render(
         </Menu>
         <Route exact path="/" render={() => <Redirect to="/search" />} />
         <Route exact path="/search" component={YelpMain} />
-        {/* <h3>Travel by CTA!</h3> */}
         <Route exact path="/itinerary" component={DirectionsMain} />
       </div>
     </Router>
