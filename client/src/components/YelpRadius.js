@@ -16,7 +16,7 @@ export default class YelpRadius extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      radius: 3
+      radius: 5
     }
   }
 
@@ -34,7 +34,7 @@ export default class YelpRadius extends React.Component {
             <Slider
               discrete
               settings={{
-                start: 3,
+                start: 5,
                 min: 1,
                 max: 10,
                 step: 1,

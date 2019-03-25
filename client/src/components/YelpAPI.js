@@ -33,18 +33,15 @@ export const CALL_YELP = gql`
 `
 
 export default class YelpAPI extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    if (this.props.readItinerary.length !== nextProps.readItinerary.length)
+  shouldComponentUpdate(nextProps) {
+    if (this.props.readItinerary.length !== nextProps.readItinerary.length) {
       return false
+    }
     return true
   }
 
   render() {
-    const { startLat, startLng, term, price, radius } = this.props.readYelp
+    const { term, price, radius } = this.props.readYelp
     const { latitude, longitude } = this.props.readItinerary[
       this.props.readItinerary.length - 1
     ].coordinates
@@ -61,6 +58,8 @@ export default class YelpAPI extends React.Component {
                   id="yelpMap"
                   businesses={data.callYelp ? data.callYelp.businesses : []}
                   client={client}
+                  userSelectedBusinesses={this.props.readItinerary}
+                  radius={radius}
                 />
               </div>
             )
