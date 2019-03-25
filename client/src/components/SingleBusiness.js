@@ -34,23 +34,27 @@ class SingleBusiness extends React.Component {
     return (
       <div id="content">
         <Header size="large">
-          <Image
-            avatar
-            src="Yelp_burst.png"
-            size="large"
-          />
+          <Image avatar src="Yelp_burst.png" size="large" />
           <List.Content floated="right" verticalAlign="middle">
             {name}
           </List.Content>
         </Header>
-        <List celled size='medium'>
+        <List celled size="medium">
           <List.Item>
-            <List.Content floated="left">Rating: </List.Content>
-            <List.Content floated="right">{rating} / 5</List.Content>
+            <List.Content floated="left">
+              <strong>Rating: </strong>
+            </List.Content>
+            <List.Content floated="right">
+              {rating} <strong>/</strong> 5
+            </List.Content>
           </List.Item>
           <List.Item>
-            <List.Content floated="left">Price Range: </List.Content>
-            <List.Content floated="right">{price}</List.Content>
+            <List.Content floated="left">
+              <strong>Price Range: </strong>
+            </List.Content>
+            <List.Content floated="right">
+              <strong>{price}</strong>
+            </List.Content>
           </List.Item>
         </List>
         <Button onClick={() => this.handleClick()}>Add to Itinerary</Button>
