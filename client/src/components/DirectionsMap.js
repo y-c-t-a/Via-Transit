@@ -2,6 +2,7 @@
 /* eslint-disable no-shadow */
 import React, { Component } from 'react'
 import { GOOGLE_API_KEY } from '../secrets'
+import ReactDOM from 'react-dom'
 
 export default class DirectionsMap extends Component {
   constructor(props) {
@@ -31,6 +32,9 @@ export default class DirectionsMap extends Component {
     if (this.state.rendererArr.length) {
       this.state.rendererArr.forEach(renderer => {
         renderer.setMap(null)
+      })
+      this.state.rendererArr.forEach(renderer => {
+        renderer.setPanel(null)
       })
     }
 
@@ -92,6 +96,7 @@ export default class DirectionsMap extends Component {
         await directionsService.route(request, function(response, status) {
           if (status === 'OK') {
             directionsRenderer.setDirections(response)
+            directionsRenderer.setPanel(document.getElementById('dirPanel'))
             tempArr.push(directionsRenderer)
           } else {
             return `Google Directions Request failed due to ${status}`
@@ -142,6 +147,10 @@ export default class DirectionsMap extends Component {
   }
 
   render() {
-    return <div style={{ width: 500, height: 500 }} id={this.props.id} />
+    return (
+      <div>
+        <div style={{ width: 500, height: 500 }} id={this.props.id} />
+      </div>
+    )
   }
 }
