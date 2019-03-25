@@ -38,15 +38,12 @@ export default class YelpAPI extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    console.log('this.props', this.props)
-    console.log('nextProps', nextProps)
     if (this.props.readItinerary.length !== nextProps.readItinerary.length)
       return false
     return true
   }
 
   render() {
-    console.log('this.props', this.props)
     const { startLat, startLng, term, price, radius } = this.props.readYelp
     const { latitude, longitude } = this.props.readItinerary[
       this.props.readItinerary.length - 1
