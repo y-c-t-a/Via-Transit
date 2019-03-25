@@ -33,7 +33,7 @@ export default class UserSelectedBusinesses extends Component {
       query: READ_ITINERARY,
       data: {
         userSelectedBusinesses: filtered
-      }
+      },
     })
   }
 

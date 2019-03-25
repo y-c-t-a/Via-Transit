@@ -15,12 +15,35 @@ import { persistCache } from 'apollo-cache-persist'
 import DirectionsMain from './components/DirectionsMain'
 import { resolvers } from './resolvers'
 import YelpMain from './components/YelpMain'
+import base64 from 'base-64'
+import { READ_ITINERARY } from './components/DirectionsMain'
 
 const cache = new InMemoryCache()
 
-persistCache({
-  cache,
-  storage: window.localStorage
+const client = new ApolloClient({
+  connectToDevTools: true,
+  link: new HttpLink({
+    uri: 'http://localhost:4000/graphql'
+  }),
+  resolvers,
+  cache
+})
+
+// persistCache({
+//   cache,
+//   storage: window.localStorage
+// })
+
+window.addEventListener('load', e => {
+  if (window.location.href.length > 40) {
+    const currentURL = JSON.parse(base64.decode(window.location.pathname.slice(11)))
+    client.writeQuery({
+      query: READ_ITINERARY,
+      data: {
+        userSelectedBusinesses: currentURL
+      },
+    })
+  }
 })
 
 cache.writeData({
@@ -31,7 +54,7 @@ cache.writeData({
       startLng: -87.6393,
       term: 'Boat Tours',
       radius: 3,
-      price: '1',
+      price: '1'
     },
     userSelectedBusinesses: [
       {
@@ -86,38 +109,21 @@ cache.writeData({
   }
 })
 
-const client = new ApolloClient({
-  connectToDevTools: true,
-  link: new HttpLink({
-    uri: 'http://localhost:4000/graphql'
-  }),
-  resolvers,
-  cache
-})
-
 ReactDOM.render(
   <ApolloProvider client={client}>
-    {/* <h3>Businesses Recommended by Yelp</h3> */}
     <Router>
       <div>
         <Menu>
           <Link to="/search">
-            <Menu.Item
-              name="search"
-              // active={activeItem  === 'search'}
-            />
+            <Menu.Item name="search" />
           </Link>
           <Link to="/itinerary">
-            <Menu.Item
-              name="itinerary"
-              // active={activeItem === 'itinerary'}
-            />
+            <Menu.Item name="itinerary" />
           </Link>
         </Menu>
         <Route exact path="/" render={() => <Redirect to="/search" />} />
-        <Route exact path="/search" component={YelpMain} />
-        {/* <h3>Travel by CTA!</h3> */}
-        <Route exact path="/itinerary" component={DirectionsMain} />
+        <Route path="/search" component={YelpMain} />
+        <Route path="/itinerary" component={DirectionsMain} />
       </div>
     </Router>
   </ApolloProvider>,
