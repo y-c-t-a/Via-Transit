@@ -27,19 +27,11 @@ cache.writeData({
   data: {
     readYelp: {
       __typename: 'readYelp',
-<<<<<<< HEAD
       startLat: 41.8838,
       startLng: -87.625,
       term: 'Coffee',
       radius: 5,
       price: '1'
-=======
-      startLat: 41.8956,
-      startLng: -87.6393,
-      term: 'Boat Tours',
-      radius: 3,
-      price: '1',
->>>>>>> 88ec8aecc6e3db767bef4a3f02e8150ba9320761
     },
     userSelectedBusinesses: [
       {
