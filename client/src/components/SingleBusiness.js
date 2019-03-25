@@ -1,6 +1,6 @@
 import React from 'react'
 import { withApollo } from 'react-apollo'
-import { Button } from 'semantic-ui-react'
+import { Button, Header, List, Image } from 'semantic-ui-react'
 import gql from 'graphql-tag'
 import { READ_ITINERARY } from './DirectionsMain'
 
@@ -33,11 +33,26 @@ class SingleBusiness extends React.Component {
 
     return (
       <div id="content">
-        <h3>{name}</h3>
-        <div>
-          <div>Rating: {rating}/5</div>
-          <div>Price: {price}</div>
-        </div>
+        <Header size="large">
+          <Image
+            avatar
+            src="Yelp_burst.png"
+            size="large"
+          />
+          <List.Content floated="right" verticalAlign="middle">
+            {name}
+          </List.Content>
+        </Header>
+        <List celled size='medium'>
+          <List.Item>
+            <List.Content floated="left">Rating: </List.Content>
+            <List.Content floated="right">{rating} / 5</List.Content>
+          </List.Item>
+          <List.Item>
+            <List.Content floated="left">Price Range: </List.Content>
+            <List.Content floated="right">{price}</List.Content>
+          </List.Item>
+        </List>
         <Button onClick={() => this.handleClick()}>Add to Itinerary</Button>
       </div>
     )

@@ -5,6 +5,7 @@ import YelpAPI from './YelpAPI'
 import YelpCategorySearch from './YelpCategorySearch'
 import YelpPrice from './YelpPrice'
 import YelpRadius from './YelpRadius'
+import UserSelectedBusinesses from './UserSelectedBusinesses'
 
 export const READ_YELP = gql`
   query {
@@ -40,7 +41,7 @@ export default class YelpMain extends React.Component {
           {({ loading: loadingOne, data: { readYelp } }) => (
             // console.log('readYelp', readYelp)
             <Query query={READ_ITINERARY}>
-              {({ loading: loadingTwo, data: { userSelectedBusinesses } }) => {
+              {({ loading: loadingTwo, data: { userSelectedBusinesses }, client }) => {
                 if (loadingOne || loadingTwo) return <span>loading...</span>
                 return (
                   <div style={{ display: 'inline-block' }}>
@@ -48,6 +49,7 @@ export default class YelpMain extends React.Component {
                       <YelpCategorySearch />
                       <YelpPrice />
                       <YelpRadius />
+                      <UserSelectedBusinesses client={client}/>
                     </div>
                     <div style={{ float: 'left' }}>
                       <YelpAPI
