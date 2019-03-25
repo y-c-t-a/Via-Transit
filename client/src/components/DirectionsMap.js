@@ -1,3 +1,4 @@
+/* eslint-disable max-statements */
 /* eslint-disable no-inner-declarations */
 /* eslint-disable no-shadow */
 import React, { Component } from 'react'
@@ -16,6 +17,22 @@ export default class DirectionsMap extends Component {
     if (!props) props = this.props
     const userSelectedBusinesses = props.userSelectedBusinesses
 
+    const latArr = []
+    const longArr = []
+
+    userSelectedBusinesses.forEach(business => {
+      latArr.push(business.coordinates.latitude)
+      longArr.push(business.coordinates.longitude)
+    })
+
+    const northMost = Math.max(...latArr)
+    const southMost = Math.min(...latArr)
+    const eastMost = Math.max(...longArr)
+    const westMost = Math.min(...longArr)
+
+    const SW = new window.google.maps.LatLng({ lat: southMost, lng: westMost })
+    const NE = new window.google.maps.LatLng({ lat: northMost, lng: eastMost })
+
     // make a new map Class if needed
     if (!this.map) {
       this.map = new window.google.maps.Map(
@@ -26,6 +43,12 @@ export default class DirectionsMap extends Component {
         }
       )
     }
+
+    const bounds = new window.google.maps.LatLngBounds()
+    bounds.extend(SW)
+    bounds.extend(NE)
+
+    this.map.fitBounds(bounds)
 
     // loop over current renderers and knock them off the map
     if (this.state.rendererArr.length) {
@@ -75,7 +98,7 @@ export default class DirectionsMap extends Component {
         const directionsService = new window.google.maps.DirectionsService()
         const directionsRenderer = new window.google.maps.DirectionsRenderer({
           map: this.map,
-          options: { suppressMarkers: true }
+          options: { suppressMarkers: true, preserveViewport: true }
         })
 
         const request = {
