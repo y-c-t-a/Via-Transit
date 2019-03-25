@@ -2,7 +2,6 @@ import React from 'react'
 import { Query } from 'react-apollo'
 import YelpMap from './YelpMap'
 import gql from 'graphql-tag'
-// import { CALL_YELP } from '../resolvers'
 
 export const CALL_YELP = gql`
   query callYelp(
@@ -33,30 +32,41 @@ export const CALL_YELP = gql`
   }
 `
 
-export default function YelpAPI(props) {
-  const { startLat, startLng, term, price, radius } = props.readYelp
-  const latitude = startLat
-  const longitude = startLng
-  return (
-    <div>
-      <Query
-        query={CALL_YELP}
-        variables={{ latitude, longitude, term, price, radius }}
-      >
-        {({ data, loading, error, client }) => {
-          // if (loading) return <h2>Loading...</h2>
-          // if (error) return <p>ERROR: {error.message}</p>
-          return (
-            <div>
-              <YelpMap
-                id="yelpMap"
-                businesses={data.callYelp ? data.callYelp.businesses : []}
-                client={client}
-              />
-            </div>
-          )
-        }}
-      </Query>
-    </div>
-  )
+export default class YelpAPI extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.props.readItinerary.length !== nextProps.readItinerary.length)
+      return false
+    return true
+  }
+
+  render() {
+    const { startLat, startLng, term, price, radius } = this.props.readYelp
+    const { latitude, longitude } = this.props.readItinerary[
+      this.props.readItinerary.length - 1
+    ].coordinates
+    return (
+      <div>
+        <Query
+          query={CALL_YELP}
+          variables={{ latitude, longitude, term, price, radius }}
+        >
+          {({ data, client }) => {
+            return (
+              <div>
+                <YelpMap
+                  id="yelpMap"
+                  businesses={data.callYelp ? data.callYelp.businesses : []}
+                  client={client}
+                />
+              </div>
+            )
+          }}
+        </Query>
+      </div>
+    )
+  }
 }

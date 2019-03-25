@@ -18,27 +18,48 @@ export const READ_YELP = gql`
   }
 `
 
+export const READ_ITINERARY = gql`
+  query readItinerary {
+    userSelectedBusinesses @client {
+      price
+      name
+      rating
+      coordinates {
+        latitude
+        longitude
+      }
+    }
+  }
+`
+
 export default class YelpMain extends React.Component {
   render() {
     return (
       <div>
         <Query query={READ_YELP}>
-          {({ data, loading, error }) => {
-            if (loading) return <h2>Loading...</h2>
-            if (error) return <p>ERROR: {error.message}</p>
-            return (
-              <div style={{ display: 'inline-block' }}>
-                <div style={{ float: 'right' }}>
-                  <YelpCategorySearch />
-                  <YelpPrice />
-                  <YelpRadius />
-                </div>
-                <div style={{ float: 'left' }}>
-                  <YelpAPI readYelp={data.readYelp} />
-                </div>
-              </div>
-            )
-          }}
+          {({ loading: loadingOne, data: { readYelp } }) => (
+            // console.log('readYelp', readYelp)
+            <Query query={READ_ITINERARY}>
+              {({ loading: loadingTwo, data: { userSelectedBusinesses } }) => {
+                if (loadingOne || loadingTwo) return <span>loading...</span>
+                return (
+                  <div style={{ display: 'inline-block' }}>
+                    <div style={{ float: 'right' }}>
+                      <YelpCategorySearch />
+                      <YelpPrice />
+                      <YelpRadius />
+                    </div>
+                    <div style={{ float: 'left' }}>
+                      <YelpAPI
+                        readYelp={readYelp}
+                        readItinerary={userSelectedBusinesses}
+                      />
+                    </div>
+                  </div>
+                )
+              }}
+            </Query>
+          )}
         </Query>
       </div>
     )
