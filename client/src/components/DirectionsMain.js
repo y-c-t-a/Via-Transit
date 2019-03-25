@@ -3,6 +3,7 @@ import gql from 'graphql-tag'
 import DirectionsMap from './DirectionsMap'
 import { Query } from 'react-apollo'
 import UserSelectedBusinesses from './UserSelectedBusinesses'
+import { updateURL } from '../resolvers';
 
 export const READ_ITINERARY = gql`
   query readItinerary {
@@ -26,6 +27,7 @@ export default class DirectionsMain extends React.Component {
           {({ data, loading, error, client }) => {
             if (loading) return <h2>Loading...</h2>
             if (error) return <p>ERROR: {error.message}</p>
+            if (data) updateURL(data.userSelectedBusinesses)
             return (
               <div style={{ display: 'inline-block' }}>
                 <div style={{ float: 'left' }}>

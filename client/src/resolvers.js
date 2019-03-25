@@ -1,5 +1,6 @@
 import gql from 'graphql-tag'
 import { READ_YELP } from './components/YelpMain'
+import base64 from 'base-64'
 
 export const GET_BUSINESSES = gql`
   query getBusinesses {
@@ -14,6 +15,11 @@ export const GET_BUSINESSES = gql`
     }
   }
 `
+
+export const updateURL = (itinerary) => {
+  const encoded = base64.encode(JSON.stringify(itinerary))
+  window.history.replaceState('', '', `http://localhost:3000/itinerary/${encoded}`)
+}
 
 export const resolvers = {
   Mutation: {
