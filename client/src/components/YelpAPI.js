@@ -48,11 +48,11 @@ export default function YelpAPI(props) {
           // if (error) return <p>ERROR: {error.message}</p>
           return (
             <div>
-              <YelpMap
+              {/* <YelpMap
                 id="yelpMap"
                 businesses={data.callYelp ? data.callYelp.businesses : []}
                 client={client}
-              />
+              /> */}
             </div>
           )
         }}

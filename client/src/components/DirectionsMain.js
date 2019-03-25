@@ -1,6 +1,6 @@
 import React from 'react'
 import gql from 'graphql-tag'
-// import DirectionsMap from './DirectionsMap'
+import DirectionsMap from './DirectionsMap'
 import { Query } from 'react-apollo'
 import UserSelectedBusinesses from './UserSelectedBusinesses'
 
@@ -29,14 +29,15 @@ export default class DirectionsMain extends React.Component {
             return (
               <div style={{ display: 'inline-block' }}>
                 <div style={{ float: 'left' }}>
-                  {/* <DirectionsMap
+                  <DirectionsMap
                     id="directionsMap"
                     userSelectedBusinesses={data.userSelectedBusinesses}
-                  /> */}
+                  />
                 </div>
                 <div style={{ float: 'right' }}>
                   <UserSelectedBusinesses client={client} />
                 </div>
+                <div id="dirPanel" style={{ float: 'right' }}/>
               </div>
             )
           }}
