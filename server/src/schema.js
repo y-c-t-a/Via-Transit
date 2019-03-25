@@ -17,10 +17,6 @@ const typeDefs = gql`
     ): Routes
   }
 
-  # type Price {
-  #   prices: [Int]
-  # }
-
   type Businesses {
     businesses: [Business]
   }

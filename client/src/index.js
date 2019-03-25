@@ -1,5 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Redirect
+} from 'react-router-dom'
+import { Menu } from 'semantic-ui-react'
 import { ApolloClient } from 'apollo-client'
 import { HttpLink } from 'apollo-link-http'
 import { ApolloProvider } from 'react-apollo'
@@ -25,7 +32,6 @@ cache.writeData({
       term: 'Coffee',
       radius: 3,
       price: '1'
-      // sort_by: 'rating'
     },
     userSelectedBusinesses: [
       {
@@ -91,10 +97,29 @@ const client = new ApolloClient({
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <h3>Businesses Recommended by Yelp</h3>
-    <YelpMain />
-    <h3>Travel by CTA!</h3>
-    <DirectionsMain />
+    {/* <h3>Businesses Recommended by Yelp</h3> */}
+    <Router>
+      <div>
+        <Menu>
+          <Link to="/search">
+            <Menu.Item
+              name="search"
+              // active={activeItem  === 'search'}
+            />
+          </Link>
+          <Link to="/itinerary">
+            <Menu.Item
+              name="itinerary"
+              // active={activeItem === 'itinerary'}
+            />
+          </Link>
+        </Menu>
+        <Route exact path="/" render={() => <Redirect to="/search" />} />
+        <Route exact path="/search" component={YelpMain} />
+        {/* <h3>Travel by CTA!</h3> */}
+        <Route exact path="/itinerary" component={DirectionsMain} />
+      </div>
+    </Router>
   </ApolloProvider>,
   document.getElementById('root')
 )
