@@ -33,18 +33,19 @@ export const CALL_YELP = gql`
 `
 
 export default class API extends React.Component {
-  shouldComponentUpdate(nextProps) {
-    if (this.props.readItinerary.length !== nextProps.readItinerary.length) {
-      return false
-    }
-    return true
-  }
+  // shouldComponentUpdate(nextProps) {
+  //   if (this.props.readItinerary.length !== nextProps.readItinerary.length) {
+  //     return false
+  //   }
+  //   return true
+  // }
 
   render() {
     const { term, price, radius } = this.props.readYelp
     const { latitude, longitude } = this.props.readItinerary[
       this.props.readItinerary.length - 1
     ].coordinates
+    console.log(this.props)
     return (
       <div>
         <Query

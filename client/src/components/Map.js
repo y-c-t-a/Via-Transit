@@ -20,6 +20,7 @@ export default class Map extends Component {
   // eslint-disable-next-line max-statements
   onScriptLoad = props => {
     if (!props) props = this.props
+
     const { businesses } = props
     const { latitude, longitude } = props.userSelectedBusinesses[
       props.userSelectedBusinesses.length - 1
@@ -102,6 +103,7 @@ export default class Map extends Component {
 
     // Directions
     const directionsScript = () => {
+      console.log('directions scirpt hit')
       const latArr = []
       const longArr = []
 
@@ -134,8 +136,6 @@ export default class Map extends Component {
       if (this.state.rendererArr.length) {
         this.state.rendererArr.forEach(renderer => {
           renderer.setMap(null)
-        })
-        this.state.rendererArr.forEach(renderer => {
           renderer.setPanel(null)
         })
       }
@@ -283,7 +283,6 @@ export default class Map extends Component {
   }
 
   handleChange = async (event, data) => {
-
     const wipeItinerary = async () => {
       await this.state.googleCurrentMarkers.forEach(currentMarker => {
         currentMarker.setMap(null)
@@ -300,8 +299,6 @@ export default class Map extends Component {
     const wipeRenderer = async () => {
       await this.state.rendererArr.forEach(renderer => {
         renderer.setMap(null)
-      })
-      await this.state.rendererArr.forEach(renderer => {
         renderer.setPanel(null)
       })
     }
@@ -314,10 +311,17 @@ export default class Map extends Component {
     } else {
       newArr = this.state.views.filter(elem => elem !== data.value)
       switch (data.value) {
-        case "Search": wipeSearch()
-        case "Itinerary": wipeItinerary()
-        case "Directions": wipeRenderer()
-        default: console.log('this is default')
+        case 'Search':
+          wipeSearch()
+          break
+        case 'Itinerary':
+          wipeItinerary()
+          break
+        case 'Directions':
+          wipeRenderer()
+          break
+        default:
+          console.log('this is default')
       }
     }
     await this.setState({ views: newArr })
@@ -349,7 +353,10 @@ export default class Map extends Component {
       s.addEventListener('load', e => {
         this.onScriptLoad(nextProps)
       })
-    } else if (nextProps.businesses !== this.props.businesses) {
+    } else if (
+      nextProps.businesses !== this.props.businessess ||
+      nextProps.userSelectedBusinesses !== this.props.userSelectedBusinesses
+    ) {
       this.onScriptLoad(nextProps)
     }
   }

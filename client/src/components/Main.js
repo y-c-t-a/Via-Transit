@@ -34,7 +34,7 @@ export const READ_ITINERARY = gql`
     }
   }
 `
-export default class YelpMain extends React.Component {
+export default class Main extends React.Component {
   render() {
     return (
       <div>
