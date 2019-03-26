@@ -34,7 +34,11 @@ class SingleBusiness extends React.Component {
     return (
       <div id="content">
         <Header size="large">
-          <Image avatar src="Yelp_burst.png" size="large" />
+          <Image
+            avatar
+            src="https://i0.wp.com/coolinglv.com/wp-content/uploads/2017/10/Yelp_burst_positive_RGB-1.png?w=500&ssl=1"
+            size="large"
+          />
           <List.Content floated="right" verticalAlign="middle">
             {name}
           </List.Content>

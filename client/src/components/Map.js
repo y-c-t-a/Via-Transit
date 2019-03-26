@@ -70,7 +70,10 @@ export default class Map extends Component {
             lat: business.coordinates.latitude,
             lng: business.coordinates.longitude
           },
-          title: business.name
+          title: business.name,
+          icon: {
+            url: 'http://maps.google.com/mapfiles/ms/icons/blue.png'
+          }
         })
 
         marker.addListener('click', function() {
@@ -154,7 +157,6 @@ export default class Map extends Component {
           currentMarker.setMap(null)
         })
       }
-
       let markerArray = []
       for (let i = 0; i < userSelectedBusinesses.length; i++) {
         const infowindow = new window.google.maps.InfoWindow({
@@ -167,7 +169,10 @@ export default class Map extends Component {
             lat: userSelectedBusinesses[i].coordinates.latitude,
             lng: userSelectedBusinesses[i].coordinates.longitude
           },
-          title: userSelectedBusinesses[i].name
+          title: userSelectedBusinesses[i].name,
+          icon: {
+            url: `http://maps.google.com/mapfiles/kml/paddle/${i + 1}.png`
+          }
         })
         marker.addListener('click', function() {
           infowindow.open(this.map, marker)
