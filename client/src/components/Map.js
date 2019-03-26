@@ -28,42 +28,22 @@ export default class Map extends Component {
 
     if (!this.map) {
       this.map = new window.google.maps.Map(document.getElementById('map'), {
-        zoom: 12,
+        zoom: 13,
         center: { lat: latitude, lng: longitude }
       })
     }
+
+    const latArr = []
+    const lngArr = []
 
     // Yelp
     const yelpScript = () => {
       const yelpMarkerArray = []
 
-      const yelpLatArr = []
-      const yelpLongArr = []
-
       businesses.forEach(business => {
-        yelpLatArr.push(business.coordinates.latitude)
-        yelpLongArr.push(business.coordinates.longitude)
+        latArr.push(business.coordinates.latitude)
+        lngArr.push(business.coordinates.longitude)
       })
-
-      const yelpNorthMost = Math.max(...yelpLatArr)
-      const yelpSouthMost = Math.min(...yelpLatArr)
-      const yelpEastMost = Math.max(...yelpLongArr)
-      const yelpWestMost = Math.min(...yelpLongArr)
-
-      const SW = new window.google.maps.LatLng({
-        lat: yelpSouthMost,
-        lng: yelpWestMost
-      })
-      const NE = new window.google.maps.LatLng({
-        lat: yelpNorthMost,
-        lng: yelpEastMost
-      })
-
-      const yelpBounds = new window.google.maps.LatLngBounds()
-      yelpBounds.extend(SW)
-      yelpBounds.extend(NE)
-
-      this.map.fitBounds(yelpBounds)
 
       if (this.state.yelpCurrentMarkers.length) {
         this.state.yelpCurrentMarkers.forEach(currentMarker => {
@@ -101,41 +81,16 @@ export default class Map extends Component {
     }
 
     // Directions
-    const directionsScript = () => {
-      const latArr = []
-      const longArr = []
-
+    const directionsScript = async () => {
       userSelectedBusinesses.forEach(business => {
         latArr.push(business.coordinates.latitude)
-        longArr.push(business.coordinates.longitude)
+        lngArr.push(business.coordinates.longitude)
       })
-
-      const northMost = Math.max(...latArr)
-      const southMost = Math.min(...latArr)
-      const eastMost = Math.max(...longArr)
-      const westMost = Math.min(...longArr)
-
-      const SW = new window.google.maps.LatLng({
-        lat: southMost,
-        lng: westMost
-      })
-      const NE = new window.google.maps.LatLng({
-        lat: northMost,
-        lng: eastMost
-      })
-
-      const bounds = new window.google.maps.LatLngBounds()
-      bounds.extend(SW)
-      bounds.extend(NE)
-
-      this.map.fitBounds(bounds)
 
       // loop over current renderers and knock them off the map
       if (this.state.rendererArr.length) {
         this.state.rendererArr.forEach(renderer => {
           renderer.setMap(null)
-        })
-        this.state.rendererArr.forEach(renderer => {
           renderer.setPanel(null)
         })
       }
@@ -176,44 +131,24 @@ export default class Map extends Component {
               return `Google Directions Request failed due to ${status}`
             }
           })
+          this.setState({ rendererArr: tempArr })
         }
       }
 
       // call the async function
-      pausePlease()
+      await pausePlease()
 
       // keep the current renderers & markres around to compare to nextProps
-      this.setState({ rendererArr: tempArr })
     }
 
     const itineraryScript = () => {
-      const latArr = []
-      const longArr = []
+      // const latArr = []
+      // const longArr = []
 
       userSelectedBusinesses.forEach(business => {
         latArr.push(business.coordinates.latitude)
-        longArr.push(business.coordinates.longitude)
+        lngArr.push(business.coordinates.longitude)
       })
-
-      const northMost = Math.max(...latArr)
-      const southMost = Math.min(...latArr)
-      const eastMost = Math.max(...longArr)
-      const westMost = Math.min(...longArr)
-
-      const SW = new window.google.maps.LatLng({
-        lat: southMost,
-        lng: westMost
-      })
-      const NE = new window.google.maps.LatLng({
-        lat: northMost,
-        lng: eastMost
-      })
-
-      const bounds = new window.google.maps.LatLngBounds()
-      bounds.extend(SW)
-      bounds.extend(NE)
-
-      this.map.fitBounds(bounds)
 
       if (this.state.googleCurrentMarkers.length) {
         this.state.googleCurrentMarkers.forEach(currentMarker => {
@@ -280,10 +215,29 @@ export default class Map extends Component {
       itineraryScript()
       directionsScript()
     }
+
+    const northMost = Math.max(...latArr)
+    const southMost = Math.min(...latArr)
+    const eastMost = Math.max(...lngArr)
+    const westMost = Math.min(...lngArr)
+
+    const SW = new window.google.maps.LatLng({
+      lat: southMost,
+      lng: westMost
+    })
+    const NE = new window.google.maps.LatLng({
+      lat: northMost,
+      lng: eastMost
+    })
+
+    const bounds = new window.google.maps.LatLngBounds()
+    bounds.extend(SW)
+    bounds.extend(NE)
+
+    this.map.fitBounds(bounds)
   }
 
   handleChange = async (event, data) => {
-
     const wipeItinerary = async () => {
       await this.state.googleCurrentMarkers.forEach(currentMarker => {
         currentMarker.setMap(null)
@@ -304,9 +258,9 @@ export default class Map extends Component {
       await this.state.rendererArr.forEach(renderer => {
         renderer.setPanel(null)
       })
+      await this.setState({ rendererArr: [] })
     }
 
-    console.log('data', data)
     let newArr = []
 
     if (data.checked) {
@@ -314,10 +268,17 @@ export default class Map extends Component {
     } else {
       newArr = this.state.views.filter(elem => elem !== data.value)
       switch (data.value) {
-        case "Search": wipeSearch()
-        case "Itinerary": wipeItinerary()
-        case "Directions": wipeRenderer()
-        default: console.log('this is default')
+        case 'Search':
+          wipeSearch()
+          break
+        case 'Itinerary':
+          wipeItinerary()
+          break
+        case 'Directions':
+          wipeRenderer()
+          break
+        default:
+          console.log('this is default')
       }
     }
     await this.setState({ views: newArr })
