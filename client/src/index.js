@@ -1,22 +1,22 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  Redirect
-} from 'react-router-dom'
-import { Menu } from 'semantic-ui-react'
+// import {
+//   BrowserRouter as Router,
+//   Route,
+//   Link,
+//   Redirect
+// } from 'react-router-dom'
+// import { Menu } from 'semantic-ui-react'
 import { ApolloClient } from 'apollo-client'
 import { HttpLink } from 'apollo-link-http'
 import { ApolloProvider } from 'react-apollo'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { persistCache } from 'apollo-cache-persist'
-import DirectionsMain from './components/DirectionsMain'
+import DirectionsMain, { READ_ITINERARY } from './components/DirectionsMain'
 import { resolvers } from './resolvers'
-import YelpMain from './components/YelpMain'
+// import YelpMain from './components/YelpMain'
 import base64 from 'base-64'
-import { READ_ITINERARY } from './components/DirectionsMain'
+import Main from './components/Main'
 
 const cache = new InMemoryCache()
 
@@ -36,12 +36,14 @@ const client = new ApolloClient({
 
 window.addEventListener('load', e => {
   if (window.location.href.length > 40) {
-    const currentURL = JSON.parse(base64.decode(window.location.pathname.slice(11)))
+    const currentURL = JSON.parse(
+      base64.decode(window.location.pathname.slice(11))
+    )
     client.writeQuery({
       query: READ_ITINERARY,
       data: {
         userSelectedBusinesses: currentURL
-      },
+      }
     })
   }
 })
@@ -111,21 +113,7 @@ cache.writeData({
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <Router>
-      <div>
-        <Menu>
-          <Link to="/search">
-            <Menu.Item name="search" />
-          </Link>
-          <Link to="/itinerary">
-            <Menu.Item name="itinerary" />
-          </Link>
-        </Menu>
-        <Route exact path="/" render={() => <Redirect to="/search" />} />
-        <Route path="/search" component={YelpMain} />
-        <Route path="/itinerary" component={DirectionsMain} />
-      </div>
-    </Router>
+    <Main />
   </ApolloProvider>,
   document.getElementById('root')
 )

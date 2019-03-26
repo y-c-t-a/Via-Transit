@@ -1,6 +1,6 @@
 import React from 'react'
 import { Query } from 'react-apollo'
-import YelpMap from './YelpMap'
+import Map from './Map'
 import gql from 'graphql-tag'
 
 export const CALL_YELP = gql`
@@ -32,7 +32,7 @@ export const CALL_YELP = gql`
   }
 `
 
-export default class YelpAPI extends React.Component {
+export default class API extends React.Component {
   shouldComponentUpdate(nextProps) {
     if (this.props.readItinerary.length !== nextProps.readItinerary.length) {
       return false
@@ -54,8 +54,7 @@ export default class YelpAPI extends React.Component {
           {({ data, client }) => {
             return (
               <div>
-                <YelpMap
-                  id="yelpMap"
+                <Map
                   businesses={data.callYelp ? data.callYelp.businesses : []}
                   client={client}
                   userSelectedBusinesses={this.props.readItinerary}
