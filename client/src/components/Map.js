@@ -20,6 +20,7 @@ export default class Map extends Component {
   // eslint-disable-next-line max-statements
   onScriptLoad = props => {
     if (!props) props = this.props
+
     const { businesses } = props
     const { latitude, longitude } = props.userSelectedBusinesses[
       props.userSelectedBusinesses.length - 1
@@ -252,8 +253,6 @@ export default class Map extends Component {
     const wipeRenderer = async () => {
       await this.state.rendererArr.forEach(renderer => {
         renderer.setMap(null)
-      })
-      await this.state.rendererArr.forEach(renderer => {
         renderer.setPanel(null)
       })
       await this.setState({ rendererArr: [] })
@@ -308,7 +307,10 @@ export default class Map extends Component {
       s.addEventListener('load', e => {
         this.onScriptLoad(nextProps)
       })
-    } else if (nextProps.businesses !== this.props.businesses) {
+    } else if (
+      nextProps.businesses !== this.props.businessess ||
+      nextProps.userSelectedBusinesses !== this.props.userSelectedBusinesses
+    ) {
       this.onScriptLoad(nextProps)
     }
   }
