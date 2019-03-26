@@ -35,7 +35,6 @@ export default class Map extends Component {
 
     // Yelp
     const yelpScript = () => {
-      console.log('yulp')
       const yelpMarkerArray = []
 
       const yelpLatArr = []
@@ -141,34 +140,6 @@ export default class Map extends Component {
         })
       }
 
-      // loop over current markers and knock them off the map
-      if (this.state.googleCurrentMarkers.length) {
-        this.state.googleCurrentMarkers.forEach(currentMarker => {
-          currentMarker.setMap(null)
-        })
-      }
-
-      // loop over itinerary and place markers on the map
-      let markerArray = []
-      for (let i = 0; i < userSelectedBusinesses.length; i++) {
-        const infowindow = new window.google.maps.InfoWindow({
-          content: userSelectedBusinesses[i].name
-        })
-
-        const marker = new window.google.maps.Marker({
-          map: this.map,
-          position: {
-            lat: userSelectedBusinesses[i].coordinates.latitude,
-            lng: userSelectedBusinesses[i].coordinates.longitude
-          },
-          title: userSelectedBusinesses[i].name
-        })
-        marker.addListener('click', function() {
-          infowindow.open(this.map, marker)
-        })
-        markerArray.push(marker)
-      }
-
       // initialize temporary array for new renderer instances
       let tempArr = []
 
@@ -212,7 +183,7 @@ export default class Map extends Component {
       pausePlease()
 
       // keep the current renderers & markres around to compare to nextProps
-      this.setState({ rendererArr: tempArr, googleCurrentMarkers: markerArray })
+      this.setState({ rendererArr: tempArr })
     }
 
     const itineraryScript = () => {
@@ -238,22 +209,17 @@ export default class Map extends Component {
         lng: eastMost
       })
 
-      // make a new map Class if needed
-      if (!this.map) {
-        this.map = new window.google.maps.Map(
-          document.getElementById('directionsMap'),
-          {
-            zoom: 13,
-            center: { lat: 41.8955, lng: -87.6392 }
-          }
-        )
-      }
-
       const bounds = new window.google.maps.LatLngBounds()
       bounds.extend(SW)
       bounds.extend(NE)
 
       this.map.fitBounds(bounds)
+
+      if (this.state.googleCurrentMarkers.length) {
+        this.state.googleCurrentMarkers.forEach(currentMarker => {
+          currentMarker.setMap(null)
+        })
+      }
 
       let markerArray = []
       for (let i = 0; i < userSelectedBusinesses.length; i++) {
@@ -278,6 +244,46 @@ export default class Map extends Component {
       this.setState({ googleCurrentMarkers: markerArray })
     }
 
+    const views = this.state.views
+
+    if (views[0] === 'Search' && views.length === 1) {
+      yelpScript()
+    }
+    if (views[0] === 'Directions' && views.length === 1) {
+      directionsScript()
+    }
+    if (views[0] === 'Itinerary' && views.length === 1) {
+      itineraryScript()
+    }
+    if (
+      views.includes('Search') &&
+      views.includes('Itinerary') &&
+      views.length === 2
+    ) {
+      itineraryScript()
+      yelpScript()
+    }
+    if (
+      views.includes('Search') &&
+      views.includes('Directions') &&
+      views.length === 2
+    ) {
+      yelpScript()
+      directionsScript()
+    }
+    if (views.includes('Itinerary') && views.includes('Directions')) {
+      itineraryScript()
+      directionsScript()
+    }
+    if (views.length === 3) {
+      yelpScript()
+      itineraryScript()
+      directionsScript()
+    }
+  }
+
+  handleChange = async (event, data) => {
+
     const wipeItinerary = async () => {
       await this.state.googleCurrentMarkers.forEach(currentMarker => {
         currentMarker.setMap(null)
@@ -300,63 +306,19 @@ export default class Map extends Component {
       })
     }
 
-    const views = this.state.views
-
-    if (views.length === 0) {
-      wipeItinerary()
-      wipeRenderer()
-      wipeSearch()
-    }
-    if (views[0] === 'Search' && views.length === 1) {
-      wipeItinerary()
-      wipeRenderer()
-      yelpScript()
-    }
-    if (views[0] === 'Directions' && views.length === 1) {
-      wipeSearch()
-      directionsScript()
-    }
-    if (views[0] === 'Itinerary' && views.length === 1) {
-      wipeRenderer()
-      wipeSearch()
-      itineraryScript()
-    }
-    if (
-      views.includes('Search') &&
-      views.includes('Itinerary') &&
-      views.length === 2
-    ) {
-      wipeRenderer()
-      itineraryScript()
-      yelpScript()
-    }
-    if (
-      views.includes('Search') &&
-      views.includes('Directions') &&
-      views.length === 2
-    ) {
-      wipeItinerary()
-      yelpScript()
-      directionsScript()
-    }
-    if (views.includes('Itinerary') && views.includes('Directions')) {
-      wipeSearch()
-      itineraryScript()
-      directionsScript()
-    }
-    if (views.length === 3) {
-      yelpScript()
-      itineraryScript()
-      directionsScript()
-    }
-  }
-
-  handleChange = async (event, { value }) => {
+    console.log('data', data)
     let newArr = []
-    if (this.state.views.length && this.state.views.includes(value)) {
-      newArr = this.state.views.filter(elem => elem !== value)
+
+    if (data.checked) {
+      newArr = [...this.state.views, data.value]
     } else {
-      newArr = [...this.state.views, value]
+      newArr = this.state.views.filter(elem => elem !== data.value)
+      switch (data.value) {
+        case "Search": wipeSearch()
+        case "Itinerary": wipeItinerary()
+        case "Directions": wipeRenderer()
+        default: console.log('this is default')
+      }
     }
     await this.setState({ views: newArr })
     this.onScriptLoad()
@@ -404,19 +366,19 @@ export default class Map extends Component {
             toggle
             label="Search"
             value="Search"
-            onChange={(event, value) => this.handleChange(event, value)}
+            onChange={(event, data) => this.handleChange(event, data)}
           />
           <Checkbox
             toggle
             label="Itinerary"
             value="Itinerary"
-            onChange={(event, value) => this.handleChange(event, value)}
+            onChange={(event, data) => this.handleChange(event, data)}
           />
           <Checkbox
             toggle
             label="Directions"
             value="Directions"
-            onChange={(event, value) => this.handleChange(event, value)}
+            onChange={(event, data) => this.handleChange(event, data)}
           />
         </div>
         <div style={{ width: 500, height: 500 }} id="map" />
