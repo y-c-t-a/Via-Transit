@@ -141,10 +141,8 @@ export default class Map extends Component {
       // keep the current renderers & markres around to compare to nextProps
     }
 
+    // Itinerary
     const itineraryScript = () => {
-      // const latArr = []
-      // const longArr = []
-
       userSelectedBusinesses.forEach(business => {
         latArr.push(business.coordinates.latitude)
         lngArr.push(business.coordinates.longitude)
