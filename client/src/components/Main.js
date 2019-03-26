@@ -1,7 +1,9 @@
+/* eslint-disable react/jsx-pascal-case */
 import React from 'react'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
-import YelpAPI from './API'
+import { updateURL } from '../resolvers'
+import API from './API'
 import YelpCategorySearch from './YelpCategorySearch'
 import YelpPrice from './YelpPrice'
 import YelpRadius from './YelpRadius'
@@ -32,7 +34,6 @@ export const READ_ITINERARY = gql`
     }
   }
 `
-
 export default class YelpMain extends React.Component {
   render() {
     return (
@@ -47,6 +48,7 @@ export default class YelpMain extends React.Component {
                 client
               }) => {
                 if (loadingOne || loadingTwo) return <span>loading...</span>
+                if (userSelectedBusinesses) updateURL(userSelectedBusinesses)
                 return (
                   <div style={{ display: 'inline-block' }}>
                     <div style={{ float: 'right' }}>
@@ -56,7 +58,7 @@ export default class YelpMain extends React.Component {
                       <UserSelectedBusinesses client={client} />
                     </div>
                     <div style={{ float: 'left' }}>
-                      <YelpAPI
+                      <API
                         readYelp={readYelp}
                         readItinerary={userSelectedBusinesses}
                       />
