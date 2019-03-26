@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Query } from 'react-apollo'
 import { READ_ITINERARY } from './DirectionsMain'
-import { Segment, Button, Icon } from 'semantic-ui-react'
+import { Segment, Button, Icon, Image } from 'semantic-ui-react'
 
 export default class UserSelectedBusinesses extends Component {
   constructor() {
@@ -33,7 +33,7 @@ export default class UserSelectedBusinesses extends Component {
       query: READ_ITINERARY,
       data: {
         userSelectedBusinesses: filtered
-      },
+      }
     })
   }
 
@@ -86,11 +86,15 @@ export default class UserSelectedBusinesses extends Component {
           if (error) return <p>ERROR: {error.message}</p>
           return (
             <Segment.Group>
-              <Segment>Itinerary</Segment>
+              <Segment textAlign="center">Itinerary</Segment>
               <Segment.Group raised>
                 {data.userSelectedBusinesses.map((business, index) => (
-                  <Segment key={business.name} color={this.state.colors[index]}>
-                    {business.name}
+                  <Segment
+                    key={business.name}
+                    color={this.state.colors[index]}
+                    padded="true"
+                  >
+                    {index + 1}. {business.name}
                     <Button.Group floated="right">
                       <Button.Group>
                         <Button
