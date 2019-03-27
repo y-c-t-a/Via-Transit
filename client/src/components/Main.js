@@ -51,7 +51,7 @@ export default class Main extends React.Component {
                 if (loadingOne || loadingTwo) return <span>loading...</span>
                 if (userSelectedBusinesses) updateURL(userSelectedBusinesses)
                 return (
-                  <Grid columns={3}>
+                  <Grid columns={3} padded>
                     <Grid.Row>
                       <Grid.Column width={4}>
                         <Segment.Group>
@@ -67,7 +67,6 @@ export default class Main extends React.Component {
                             </Segment>
                             <Segment>
                               <Label attached="top">Radius in Miles</Label>
-
                               <YelpRadius />
                             </Segment>
                           </Segment.Group>

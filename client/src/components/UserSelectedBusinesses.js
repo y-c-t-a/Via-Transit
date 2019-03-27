@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Query } from 'react-apollo'
 import { READ_ITINERARY } from './DirectionsMain'
-import { Segment, Button, Icon, Image } from 'semantic-ui-react'
+import { Segment, Button, Icon, Image, List, Grid } from 'semantic-ui-react'
 
 export default class UserSelectedBusinesses extends Component {
   constructor() {
@@ -96,28 +96,26 @@ export default class UserSelectedBusinesses extends Component {
                   >
                     {index + 1}. {business.name}
                     <Button.Group floated="right">
-                      <Button.Group>
-                        <Button
-                          icon
-                          value={business.name}
-                          size="mini"
-                          onClick={this.upHandler}
-                        >
-                          <Icon name="chevron up" onClick={this.upHandler} />
-                        </Button>
-                        <Button
-                          icon
-                          onClick={this.downHandler}
-                          value={business.name}
-                          size="mini"
-                        >
-                          <Icon
-                            name="chevron down"
-                            onClick={this.downHandler}
-                          />
-                        </Button>
-                      </Button.Group>
                       <Button
+                        compact
+                        icon
+                        value={business.name}
+                        size="mini"
+                        onClick={this.upHandler}
+                      >
+                        <Icon name="chevron up" onClick={this.upHandler} />
+                      </Button>
+                      <Button
+                        compact
+                        icon
+                        onClick={this.downHandler}
+                        value={business.name}
+                        size="mini"
+                      >
+                        <Icon name="chevron down" onClick={this.downHandler} />
+                      </Button>
+                      <Button
+                        compact
                         icon
                         value={business.name}
                         size="mini"
