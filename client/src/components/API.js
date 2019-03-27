@@ -45,7 +45,6 @@ export default class API extends React.Component {
     const { latitude, longitude } = this.props.readItinerary[
       this.props.readItinerary.length - 1
     ].coordinates
-    console.log(this.props)
     return (
       <div>
         <Query

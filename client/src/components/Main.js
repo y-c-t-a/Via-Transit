@@ -92,13 +92,13 @@ export default class Main extends React.Component {
                           </Segment>
                         </Segment.Group>
                       </Grid.Column>
-                      <Grid.Column width={8}>
+                      <Grid.Column width={7}>
                         <API
                           readYelp={readYelp}
                           readItinerary={userSelectedBusinesses}
                         />
                       </Grid.Column>
-                      <Grid.Column width={4} style={{ paddingLeft: 0 }}>
+                      <Grid.Column width={5} style={{ paddingLeft: 0 }}>
                         <Grid.Row>
                           <UserSelectedBusinesses client={client} />
                         </Grid.Row>
