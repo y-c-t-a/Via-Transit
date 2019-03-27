@@ -15,7 +15,7 @@ export default function YelpPrice() {
   return (
     <Mutation mutation={UPDATE_PRICE}>
       {updatePrice => (
-        <Button.Group size="mini">
+        <Button.Group size="mini" widths={4}>
           <Button onClick={() => updatePrice({ variables: { price: '1' } })}>
             $
           </Button>

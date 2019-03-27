@@ -5,7 +5,7 @@ import { GOOGLE_API_KEY } from '../secrets'
 import SingleBusiness from './SingleBusiness'
 import ReactDOM from 'react-dom'
 import { ApolloProvider } from 'react-apollo'
-import { Menu, Checkbox, Item } from 'semantic-ui-react'
+import { Menu, Checkbox, Item, Grid, Segment } from 'semantic-ui-react'
 
 export default class Map extends Component {
   constructor(props) {
@@ -259,6 +259,10 @@ export default class Map extends Component {
       await this.state.rendererArr.forEach(renderer => {
         renderer.setMap(null)
         renderer.setPanel(null)
+        renderer.setOptions({
+          directions: null
+        })
+        renderer.setOptions({ suppressPolylines: true })
       })
       await this.setState({ rendererArr: [] })
     }
@@ -326,29 +330,41 @@ export default class Map extends Component {
 
   render() {
     return (
-      <div>
-        <div>
-          <Checkbox
-            toggle
-            label="Search"
-            value="Search"
-            onChange={(event, data) => this.handleChange(event, data)}
-          />
-          <Checkbox
-            toggle
-            label="Itinerary"
-            value="Itinerary"
-            onChange={(event, data) => this.handleChange(event, data)}
-          />
-          <Checkbox
-            toggle
-            label="Directions"
-            value="Directions"
-            onChange={(event, data) => this.handleChange(event, data)}
-          />
-        </div>
-        <div style={{ width: 500, height: 500 }} id="map" />
-      </div>
+      <Grid verticalAlign="middle" centered>
+        <Grid.Column>
+          <Grid.Row>
+            <Segment.Group horizontal>
+              <Segment>
+                <Checkbox
+                  toggle
+                  label="Search"
+                  value="Search"
+                  onChange={(event, data) => this.handleChange(event, data)}
+                />
+              </Segment>
+              <Segment>
+                <Checkbox
+                  toggle
+                  label="Itinerary"
+                  value="Itinerary"
+                  onChange={(event, data) => this.handleChange(event, data)}
+                />
+              </Segment>
+              <Segment>
+                <Checkbox
+                  toggle
+                  label="Directions"
+                  value="Directions"
+                  onChange={(event, data) => this.handleChange(event, data)}
+                />
+              </Segment>
+            </Segment.Group>
+          </Grid.Row>
+          <Grid.Row>
+            <div style={{ width: 480, height: 480 }} id="map" />
+          </Grid.Row>
+        </Grid.Column>
+      </Grid>
     )
   }
 }
