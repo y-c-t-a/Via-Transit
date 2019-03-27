@@ -346,7 +346,7 @@ export default class Map extends Component {
               <Segment>
                 <Checkbox
                   toggle
-                  label="Search"
+                  label="Search Yelp"
                   value="Search"
                   onChange={(event, data) => this.handleChange(event, data)}
                 />
