@@ -2,7 +2,7 @@ import React from 'react'
 import { withApollo } from 'react-apollo'
 import { Button, Header, List, Image } from 'semantic-ui-react'
 import gql from 'graphql-tag'
-import { READ_ITINERARY } from './DirectionsMain'
+import { READ_ITINERARY } from './Main'
 
 export const UPDATE_SELECTED_BUSINESSES = gql`
   mutation updateSelectedBusinesses($business: Business) {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Query } from 'react-apollo'
-import { READ_ITINERARY } from './DirectionsMain'
+import { READ_ITINERARY } from './Main'
 import { Segment, Button, Icon, Image, List, Grid } from 'semantic-ui-react'
 
 export default class UserSelectedBusinesses extends Component {
@@ -87,13 +87,12 @@ export default class UserSelectedBusinesses extends Component {
           return (
             <Segment.Group>
               <Segment textAlign="center">Itinerary</Segment>
-              <Segment.Group raised>
+              <Segment.Group
+                style={{ height: '33vh', overflow: 'scroll' }}
+                raised
+              >
                 {data.userSelectedBusinesses.map((business, index) => (
-                  <Segment
-                    key={business.name}
-                    color={this.state.colors[index]}
-                    padded="true"
-                  >
+                  <Segment key={business.name} color={this.state.colors[index]}>
                     {index + 1}. {business.name}
                     <Button.Group floated="right">
                       <Button
