@@ -8,7 +8,7 @@ import YelpCategorySearch from './YelpCategorySearch'
 import YelpPrice from './YelpPrice'
 import YelpRadius from './YelpRadius'
 import UserSelectedBusinesses from './UserSelectedBusinesses'
-import { Grid, Segment, Label, Header } from 'semantic-ui-react'
+import { Grid, Segment, Label, Header, Button } from 'semantic-ui-react'
 
 export const READ_YELP = gql`
   query {
@@ -41,7 +41,6 @@ export default class Main extends React.Component {
       <div>
         <Query query={READ_YELP}>
           {({ loading: loadingOne, data: { readYelp } }) => (
-            // console.log('readYelp', readYelp)
             <Query query={READ_ITINERARY}>
               {({
                 loading: loadingTwo,
@@ -79,6 +78,19 @@ export default class Main extends React.Component {
                               <YelpRadius />
                             </Segment>
                           </Segment.Group>
+                        </Segment.Group>
+                        <Segment.Group>
+                          <Segment textAlign="center">
+                            <Button>
+                              <a
+                                target="_blank"
+                                href="https://www.transitchicago.com/howto/"
+                                style={{ color: '#696969' }}
+                              >
+                                How to ride the CTA
+                              </a>
+                            </Button>
+                          </Segment>
                         </Segment.Group>
                       </Grid.Column>
                       <Grid.Column width={8}>
