@@ -74,7 +74,6 @@ export default class Main extends React.Component {
                             </Segment>
                             <Segment>
                               <Label attached="top">Radius in Miles</Label>
-
                               <YelpRadius />
                             </Segment>
                           </Segment.Group>
