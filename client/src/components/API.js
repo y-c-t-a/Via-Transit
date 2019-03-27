@@ -54,14 +54,13 @@ export default class API extends React.Component {
         >
           {({ data, client }) => {
             return (
-              <div>
-                <Map
-                  businesses={data.callYelp ? data.callYelp.businesses : []}
-                  client={client}
-                  userSelectedBusinesses={this.props.readItinerary}
-                  radius={radius}
-                />
-              </div>
+              <Map
+                style={{ width: '100%', height: '100%' }}
+                businesses={data.callYelp ? data.callYelp.businesses : []}
+                client={client}
+                userSelectedBusinesses={this.props.readItinerary}
+                radius={radius}
+              />
             )
           }}
         </Query>

@@ -59,7 +59,7 @@ export default class Main extends React.Component {
                         Via Transit
                       </Header>
                     </Grid.Row>
-                    <Grid.Row>
+                    <Grid.Row style={{ height: '90vh' }}>
                       <Grid.Column width={4} style={{ paddingRight: 0 }}>
                         <Segment.Group>
                           <Segment textAlign="center">Yelp Filters</Segment>
@@ -94,20 +94,17 @@ export default class Main extends React.Component {
                       </Grid.Column>
                       <Grid.Column width={8}>
                         <API
+                          style={{ width: '100%', height: '100%' }}
                           readYelp={readYelp}
                           readItinerary={userSelectedBusinesses}
                         />
                       </Grid.Column>
                       <Grid.Column width={4} style={{ paddingLeft: 0 }}>
-                        <Grid.Row>
-                          <UserSelectedBusinesses client={client} />
-                        </Grid.Row>
-                        <Grid.Row>
-                          <Segment.Group>
-                            <Segment textAlign="center">Directions</Segment>
-                            <Segment id="directionsPanel" />
-                          </Segment.Group>
-                        </Grid.Row>
+                        <UserSelectedBusinesses client={client} />
+                        <Segment.Group>
+                          <Segment textAlign="center">Directions</Segment>
+                          <Segment id="directionsPanel" />
+                        </Segment.Group>
                       </Grid.Column>
                     </Grid.Row>
                   </Grid>

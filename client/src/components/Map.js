@@ -340,8 +340,8 @@ export default class Map extends Component {
   render() {
     return (
       <Grid verticalAlign="middle" centered>
-        <Grid.Column style={{ paddingTop: 0 }}>
-          <Grid.Row>
+        <Grid.Column style={{ paddingTop: 0, height: '100%' }}>
+          <Grid.Row style={{ paddingTop: 0 }}>
             <Segment.Group horizontal>
               <Segment>
                 <Checkbox
@@ -369,8 +369,8 @@ export default class Map extends Component {
               </Segment>
             </Segment.Group>
           </Grid.Row>
-          <Grid.Row>
-            <Container style={{ width: 1200, height: 950 }} id="map" />
+          <Grid.Row style={{ width: '100%', height: '100%' }}>
+            <Container style={{ width: '100%', height: '80vh' }} id="map" />
           </Grid.Row>
         </Grid.Column>
       </Grid>
