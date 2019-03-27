@@ -61,12 +61,12 @@ export default class Main extends React.Component {
                               <Label attached="top">Category</Label>
                               <YelpCategorySearch />
                             </Segment>
-                            <Segment textAlign="center">
+                            <Segment>
                               <Label attached="top" content="Price" />
                               <YelpPrice />
                             </Segment>
                             <Segment>
-                              <Label>Radius in Miles</Label>
+                              <Label attached="top">Radius in Miles</Label>
 
                               <YelpRadius />
                             </Segment>
