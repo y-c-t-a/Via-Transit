@@ -5,7 +5,14 @@ import { GOOGLE_API_KEY } from '../secrets'
 import SingleBusiness from './SingleBusiness'
 import ReactDOM from 'react-dom'
 import { ApolloProvider } from 'react-apollo'
-import { Menu, Checkbox, Item, Grid, Segment } from 'semantic-ui-react'
+import {
+  Menu,
+  Checkbox,
+  Item,
+  Grid,
+  Segment,
+  Container
+} from 'semantic-ui-react'
 
 export default class Map extends Component {
   constructor(props) {
@@ -129,7 +136,9 @@ export default class Map extends Component {
           await directionsService.route(request, function(response, status) {
             if (status === 'OK') {
               directionsRenderer.setDirections(response)
-              directionsRenderer.setPanel(document.getElementById('dirPanel'))
+              directionsRenderer.setPanel(
+                document.getElementById('directionsPanel')
+              )
               tempArr.push(directionsRenderer)
             } else {
               return `Google Directions Request failed due to ${status}`
@@ -331,13 +340,13 @@ export default class Map extends Component {
   render() {
     return (
       <Grid verticalAlign="middle" centered>
-        <Grid.Column>
+        <Grid.Column style={{ paddingTop: 0 }}>
           <Grid.Row>
             <Segment.Group horizontal>
               <Segment>
                 <Checkbox
                   toggle
-                  label="Search"
+                  label="Search Yelp"
                   value="Search"
                   onChange={(event, data) => this.handleChange(event, data)}
                 />
@@ -361,7 +370,7 @@ export default class Map extends Component {
             </Segment.Group>
           </Grid.Row>
           <Grid.Row>
-            <div style={{ width: 480, height: 480 }} id="map" />
+            <Container style={{ width: 1200, height: 950 }} id="map" />
           </Grid.Row>
         </Grid.Column>
       </Grid>

@@ -32,6 +32,7 @@ export default class YelpRadius extends React.Component {
         {mutate => (
           <div>
             <Slider
+              // style={{ display: 'inline-block', width: '90%', float: 'left' }}
               discrete
               settings={{
                 start: 5,
@@ -44,7 +45,12 @@ export default class YelpRadius extends React.Component {
                 }
               }}
             />
-            <Label color="red">{this.state.radius}</Label>
+            <Label
+              // style={{ display: 'inline-block', width: '10%', float: 'right' }}
+              color="red"
+            >
+              {this.state.radius}
+            </Label>
           </div>
         )}
       </Mutation>

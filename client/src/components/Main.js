@@ -8,7 +8,7 @@ import YelpCategorySearch from './YelpCategorySearch'
 import YelpPrice from './YelpPrice'
 import YelpRadius from './YelpRadius'
 import UserSelectedBusinesses from './UserSelectedBusinesses'
-import { Grid, Segment, Label } from 'semantic-ui-react'
+import { Grid, Segment, Label, Header } from 'semantic-ui-react'
 
 export const READ_YELP = gql`
   query {
@@ -51,11 +51,19 @@ export default class Main extends React.Component {
                 if (loadingOne || loadingTwo) return <span>loading...</span>
                 if (userSelectedBusinesses) updateURL(userSelectedBusinesses)
                 return (
-                  <Grid columns={3}>
+                  <Grid columns={3} centered padded>
+                    <Grid.Row style={{ paddingBottom: 14 }}>
+                      <Header
+                        as="h1"
+                        style={{ paddingTop: 16, paddingBottom: 0 }}
+                      >
+                        Via Transit
+                      </Header>
+                    </Grid.Row>
                     <Grid.Row>
-                      <Grid.Column width={4}>
+                      <Grid.Column width={4} style={{ paddingRight: 0 }}>
                         <Segment.Group>
-                          <Segment textAlign="center">Filters</Segment>
+                          <Segment textAlign="center">Yelp Filters</Segment>
                           <Segment.Group raised>
                             <Segment>
                               <Label attached="top">Category</Label>
@@ -73,14 +81,22 @@ export default class Main extends React.Component {
                           </Segment.Group>
                         </Segment.Group>
                       </Grid.Column>
-                      <Grid.Column width={7}>
+                      <Grid.Column width={8}>
                         <API
                           readYelp={readYelp}
                           readItinerary={userSelectedBusinesses}
                         />
                       </Grid.Column>
-                      <Grid.Column width={5}>
-                        <UserSelectedBusinesses client={client} />
+                      <Grid.Column width={4} style={{ paddingLeft: 0 }}>
+                        <Grid.Row>
+                          <UserSelectedBusinesses client={client} />
+                        </Grid.Row>
+                        <Grid.Row>
+                          <Segment.Group>
+                            <Segment textAlign="center">Directions</Segment>
+                            <Segment id="directionsPanel" />
+                          </Segment.Group>
+                        </Grid.Row>
                       </Grid.Column>
                     </Grid.Row>
                   </Grid>
