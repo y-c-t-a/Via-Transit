@@ -44,7 +44,7 @@ export default class Map extends Component {
 
     if (!this.map) {
       this.map = new window.google.maps.Map(document.getElementById('map'), {
-        zoom: 13,
+        zoom: 15,
         center: { lat: latitude, lng: longitude }
       })
     }
