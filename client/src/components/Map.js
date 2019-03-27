@@ -29,10 +29,18 @@ export default class Map extends Component {
     if (!props) props = this.props
 
     const { businesses } = props
-    const { latitude, longitude } = props.userSelectedBusinesses[
-      props.userSelectedBusinesses.length - 1
-    ].coordinates
     const { userSelectedBusinesses } = props
+    let latitude
+    let longitude
+    if (this.props.readItinerary && this.props.readItinerary.length) {
+      latitude = this.props.readItinerary[this.props.readItinerary.length - 1]
+        .coordinates.latitude
+      longitude = this.props.readItinerary[this.props.readItinerary.length - 1]
+        .coordinates.longitude
+    } else {
+      latitude = 41.883498
+      longitude = -87.624951
+    }
 
     if (!this.map) {
       this.map = new window.google.maps.Map(document.getElementById('map'), {
@@ -370,7 +378,7 @@ export default class Map extends Component {
             </Segment.Group>
           </Grid.Row>
           <Grid.Row style={{ width: '100%', height: '100%' }}>
-            <Container style={{ width: '100%', height: '80vh' }} id="map" />
+            <Container style={{ width: '100%', height: '75vh' }} id="map" />
           </Grid.Row>
         </Grid.Column>
       </Grid>
