@@ -8,6 +8,7 @@ import YelpCategorySearch from './YelpCategorySearch'
 import YelpPrice from './YelpPrice'
 import YelpRadius from './YelpRadius'
 import UserSelectedBusinesses from './UserSelectedBusinesses'
+import { Grid, Segment, Label } from 'semantic-ui-react'
 
 export const READ_YELP = gql`
   query {
@@ -50,20 +51,39 @@ export default class Main extends React.Component {
                 if (loadingOne || loadingTwo) return <span>loading...</span>
                 if (userSelectedBusinesses) updateURL(userSelectedBusinesses)
                 return (
-                  <div style={{ display: 'inline-block' }}>
-                    <div style={{ float: 'right' }}>
-                      <YelpCategorySearch />
-                      <YelpPrice />
-                      <YelpRadius />
-                      <UserSelectedBusinesses client={client} />
-                    </div>
-                    <div style={{ float: 'left' }}>
-                      <API
-                        readYelp={readYelp}
-                        readItinerary={userSelectedBusinesses}
-                      />
-                    </div>
-                  </div>
+                  <Grid columns={3}>
+                    <Grid.Row>
+                      <Grid.Column width={4}>
+                        <Segment.Group>
+                          <Segment textAlign="center">Filters</Segment>
+                          <Segment.Group raised>
+                            <Segment>
+                              <Label attached="top">Category</Label>
+                              <YelpCategorySearch />
+                            </Segment>
+                            <Segment>
+                              <Label attached="top" content="Price" />
+                              <YelpPrice />
+                            </Segment>
+                            <Segment>
+                              <Label attached="top">Radius in Miles</Label>
+
+                              <YelpRadius />
+                            </Segment>
+                          </Segment.Group>
+                        </Segment.Group>
+                      </Grid.Column>
+                      <Grid.Column width={7}>
+                        <API
+                          readYelp={readYelp}
+                          readItinerary={userSelectedBusinesses}
+                        />
+                      </Grid.Column>
+                      <Grid.Column width={5}>
+                        <UserSelectedBusinesses client={client} />
+                      </Grid.Column>
+                    </Grid.Row>
+                  </Grid>
                 )
               }}
             </Query>
