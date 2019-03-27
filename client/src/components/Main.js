@@ -101,9 +101,12 @@ export default class Main extends React.Component {
                       </Grid.Column>
                       <Grid.Column width={4} style={{ paddingLeft: 0 }}>
                         <UserSelectedBusinesses client={client} />
-                        <Segment.Group>
-                          <Segment textAlign="center">Directions</Segment>
-                          <Segment id="directionsPanel" />
+                        <Segment.Group style={{ overflow: 'scroll' }}>
+                          <Segment textAlign="center">Step by Step</Segment>
+                          <Segment
+                            id="directionsPanel"
+                            style={{ height: '33vh' }}
+                          />
                         </Segment.Group>
                       </Grid.Column>
                     </Grid.Row>
