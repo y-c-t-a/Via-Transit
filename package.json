@@ -26,6 +26,7 @@
     "base-64": "^0.1.0",
     "dotenv": "^7.0.0",
     "graphql": "^14.1.1",
+    "heroku": "^7.22.7",
     "react": "^16.8.4",
     "react-apollo": "^2.5.2",
     "react-dom": "^16.8.4",
