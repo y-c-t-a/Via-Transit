@@ -36,7 +36,7 @@ const client = new ApolloClient({
 window.addEventListener('load', e => {
   if (window.location.href.length > 40) {
     const currentURL = JSON.parse(
-      base64.decode(window.location.pathname.slice(11))
+      base64.decode(window.location.pathname.slice(1))
     )
     client.writeQuery({
       query: READ_ITINERARY,
