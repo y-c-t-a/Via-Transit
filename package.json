@@ -4,6 +4,10 @@
   "description": "",
   "private": true,
   "main": "src/index.js",
+  "prettier": {
+    "semi": false,
+    "singleQuote": true
+  },
   "scripts": {
     "start": "nodemon src/index.js"
   },
