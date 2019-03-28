@@ -9,15 +9,15 @@ require('dotenv').config()
 
 const dataSources = () => ({
   YelpAPI: new YelpAPI(),
-  GoogleAPI: new GoogleAPI()
+  GoogleAPI: new GoogleAPI(),
 })
 
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  dataSources
+  dataSources,
 })
 
 server
-  .listen({ port: 4000 })
+  .listen({ port: process.env.PORT || 4000 })
   .then(({ url }) => console.log(`🚀 app running at ${url}`))
