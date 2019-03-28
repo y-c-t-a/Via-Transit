@@ -22,7 +22,7 @@ const cache = new InMemoryCache()
 const client = new ApolloClient({
   connectToDevTools: true,
   link: new HttpLink({
-    uri: 'http://localhost:4000/graphql'
+    uri: 'https://via-transit-server.herokuapp.com/'
   }),
   resolvers,
   cache
