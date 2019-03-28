@@ -2,7 +2,7 @@ const { ApolloServer } = require('apollo-server')
 const typeDefs = require('./schema')
 const resolvers = require('./resolvers')
 
-const YelpAPI = require('./DataSources/YelpAPI')
+const YelpAPI = require('./DataSources/yelpAPI')
 const GoogleAPI = require('./DataSources/googleAPI')
 
 require('dotenv').config()
