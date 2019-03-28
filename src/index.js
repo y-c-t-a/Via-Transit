@@ -22,7 +22,7 @@ const cache = new InMemoryCache()
 const client = new ApolloClient({
   connectToDevTools: true,
   link: new HttpLink({
-    uri: 'https://via-transit-server.herokuapp.com/'
+    uri: 'https://via-transit-server.herokuapp.com'
   }),
   resolvers,
   cache
@@ -34,7 +34,7 @@ const client = new ApolloClient({
 // })
 
 window.addEventListener('load', e => {
-  if (window.location.href.length > 40) {
+  if (window.location.href.length > 45) {
     const currentURL = JSON.parse(
       base64.decode(window.location.pathname.slice(1))
     )
