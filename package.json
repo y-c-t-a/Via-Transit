@@ -8,6 +8,9 @@
     "semi": false,
     "singleQuote": true
   },
+  "engines": {
+    "node": "11.2.0"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build"
