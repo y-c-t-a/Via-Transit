@@ -21,7 +21,7 @@ export const updateURL = itinerary => {
   window.history.replaceState(
     '',
     '',
-    `https://via-transit-server.herokuapp.com/${encoded}`
+    `https://via-transit.herokuapp.com/${encoded}`
   )
 }
 
