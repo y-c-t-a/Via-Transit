@@ -53,35 +53,11 @@ cache.writeData({
       __typename: 'readYelp',
       startLat: 41.8838,
       startLng: -87.625,
-      term: 'Coffee',
-      radius: 5,
+      term: '',
+      radius: 10,
       price: '1'
     },
     userSelectedBusinesses: [
-      {
-        __typename: 'Business',
-        id: 1,
-        price: '$',
-        name: 'Dollop',
-        rating: 4,
-        coordinates: {
-          __typename: 'Coordinates',
-          latitude: 41.8921475,
-          longitude: -87.6191869
-        }
-      },
-      {
-        __typename: 'Business',
-        id: 2,
-        price: '$',
-        name: 'Kung Fu Tea',
-        rating: 3,
-        coordinates: {
-          __typename: 'Coordinates',
-          latitude: 41.8542969,
-          longitude: -87.6350943
-        }
-      },
       {
         __typename: 'Business',
         id: 3,
@@ -92,18 +68,6 @@ cache.writeData({
           __typename: 'Coordinates',
           latitude: 41.8806908,
           longitude: -87.6763646
-        }
-      },
-      {
-        __typename: 'Business',
-        id: 4,
-        price: '$$',
-        name: 'Wrigley Field',
-        rating: 2.5,
-        coordinates: {
-          __typename: 'Coordinates',
-          latitude: 41.9413393,
-          longitude: -87.655412
         }
       }
     ]

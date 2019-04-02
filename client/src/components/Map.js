@@ -1,18 +1,11 @@
 /* eslint-disable max-statements */
 /* eslint-disable complexity */
 import React, { Component } from 'react'
-import { GOOGLE_API_KEY } from '../secrets'
+import { REACT_APP_GOOGLE_API_KEY } from '../secrets'
 import SingleBusiness from './SingleBusiness'
 import ReactDOM from 'react-dom'
 import { ApolloProvider } from 'react-apollo'
-import {
-  Menu,
-  Checkbox,
-  Item,
-  Grid,
-  Segment,
-  Container
-} from 'semantic-ui-react'
+import { Checkbox, Grid, Segment, Container } from 'semantic-ui-react'
 
 export default class Map extends Component {
   constructor(props) {
@@ -255,7 +248,9 @@ export default class Map extends Component {
     bounds.extend(SW)
     bounds.extend(NE)
 
-    this.map.fitBounds(bounds)
+    if (latArr.length >= 2) this.map.fitBounds(bounds)
+    if (latArr.length === 1)
+      this.map.setCenter({ lat: latArr[0], lng: lngArr[0] })
   }
 
   handleChange = async (event, data) => {
@@ -312,7 +307,7 @@ export default class Map extends Component {
     if (!window.google) {
       var s = document.createElement('script')
       s.type = 'text/javascript'
-      s.src = `https://maps.google.com/maps/api/js?key=${GOOGLE_API_KEY}`
+      s.src = `https://maps.google.com/maps/api/js?key=${REACT_APP_GOOGLE_API_KEY}`
       var x = document.getElementsByTagName('script')[0]
       x.parentNode.insertBefore(s, x)
       s.addEventListener('load', e => {
@@ -327,7 +322,7 @@ export default class Map extends Component {
     if (!window.google) {
       var s = document.createElement('script')
       s.type = 'text/javascript'
-      s.src = `https://maps.google.com/maps/api/js?key=${GOOGLE_API_KEY}`
+      s.src = `https://maps.google.com/maps/api/js?key=${REACT_APP_GOOGLE_API_KEY}`
       var x = document.getElementsByTagName('script')[0]
       x.parentNode.insertBefore(s, x)
       s.addEventListener('load', e => {

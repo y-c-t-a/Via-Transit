@@ -69,7 +69,7 @@ export default class Main extends React.Component {
                           </Segment>
                           <Segment>
                             <Label attached="top" content="Price" />
-                            <YelpPrice />
+                            <YelpPrice price={readYelp.price} />
                           </Segment>
                           <Segment>
                             <Label attached="top">Radius in Miles</Label>
