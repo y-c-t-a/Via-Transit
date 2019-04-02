@@ -312,7 +312,7 @@ export default class Map extends Component {
     if (!window.google) {
       var s = document.createElement('script')
       s.type = 'text/javascript'
-      s.src = `https://maps.google.com/maps/api/js?key=${process.env.GOOGLE_API_KEY}`
+      s.src = `https://maps.google.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_API_KEY}`
       var x = document.getElementsByTagName('script')[0]
       x.parentNode.insertBefore(s, x)
       s.addEventListener('load', e => {
@@ -327,7 +327,7 @@ export default class Map extends Component {
     if (!window.google) {
       var s = document.createElement('script')
       s.type = 'text/javascript'
-      s.src = `https://maps.google.com/maps/api/js?key=${process.env.GOOGLE_API_KEY}`
+      s.src = `https://maps.google.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_API_KEY}`
       var x = document.getElementsByTagName('script')[0]
       x.parentNode.insertBefore(s, x)
       s.addEventListener('load', e => {
