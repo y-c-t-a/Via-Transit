@@ -28,10 +28,10 @@ const client = new ApolloClient({
   cache
 })
 
-// persistCache({
-//   cache,
-//   storage: window.localStorage
-// })
+persistCache({
+  cache,
+  storage: window.localStorage
+})
 
 window.addEventListener('load', e => {
   if (window.location.href.length > 40) {
