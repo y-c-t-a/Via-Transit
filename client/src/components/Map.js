@@ -5,7 +5,7 @@ import { REACT_APP_GOOGLE_API_KEY } from '../secrets'
 import SingleBusiness from './SingleBusiness'
 import ReactDOM from 'react-dom'
 import { ApolloProvider } from 'react-apollo'
-import { Checkbox, Grid, Segment, Container } from 'semantic-ui-react'
+import { Checkbox, Grid, Segment, Container, Tab } from 'semantic-ui-react'
 
 export default class Map extends Component {
   constructor(props) {
@@ -220,7 +220,11 @@ export default class Map extends Component {
       yelpScript()
       directionsScript()
     }
-    if (views.includes('Itinerary') && views.includes('Directions')) {
+    if (
+      views.includes('Itinerary') &&
+      views.includes('Directions') &&
+      views.length === 2
+    ) {
       itineraryScript()
       directionsScript()
     }
@@ -276,7 +280,7 @@ export default class Map extends Component {
         })
         renderer.setOptions({ suppressPolylines: true })
       })
-      await this.setState({ rendererArr: [] })
+      // await this.setState({ rendererArr: [] })
     }
 
     let newArr = []

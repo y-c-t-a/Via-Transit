@@ -11,50 +11,44 @@ export const UPDATE_PRICE = gql`
   }
 `
 
-export default class YelpPrice extends React.Component {
-  constructor() {
-    super()
-  }
-  render() {
-    console.log('this.props', this.props)
-    return (
-      <Mutation mutation={UPDATE_PRICE}>
-        {updatePrice => {
-          const price = this.props.price.slice(-1)
-          return (
-            <Button.Group toggle size="mini" widths={4}>
-              <Button
-                active={price === '1'}
-                onClick={() => {
-                  updatePrice({ variables: { price: '1' } })
-                }}
-              >
-                $
-              </Button>
-              <Button
-                active={price === '2'}
-                onClick={() => {
-                  updatePrice({ variables: { price: '1, 2' } })
-                }}
-              >
-                $$
-              </Button>
-              <Button
-                active={price === '3'}
-                onClick={() => updatePrice({ variables: { price: '2, 3' } })}
-              >
-                $$$
-              </Button>
-              <Button
-                active={price === '4'}
-                onClick={() => updatePrice({ variables: { price: '3, 4' } })}
-              >
-                $$$$
-              </Button>
-            </Button.Group>
-          )
-        }}
-      </Mutation>
-    )
-  }
+export default function YelpPrice(props) {
+  return (
+    <Mutation mutation={UPDATE_PRICE}>
+      {updatePrice => {
+        const price = props.price.slice(-1)
+        return (
+          <Button.Group toggle size="mini" widths={4}>
+            <Button
+              active={price === '1'}
+              onClick={() => {
+                updatePrice({ variables: { price: '1' } })
+              }}
+            >
+              $
+            </Button>
+            <Button
+              active={price === '2'}
+              onClick={() => {
+                updatePrice({ variables: { price: '1, 2' } })
+              }}
+            >
+              $$
+            </Button>
+            <Button
+              active={props.price.slice(-1) === '3'}
+              onClick={() => updatePrice({ variables: { price: '2, 3' } })}
+            >
+              $$$
+            </Button>
+            <Button
+              active={props.price.slice(-1) === '4'}
+              onClick={() => updatePrice({ variables: { price: '3, 4' } })}
+            >
+              $$$$
+            </Button>
+          </Button.Group>
+        )
+      }}
+    </Mutation>
+  )
 }
